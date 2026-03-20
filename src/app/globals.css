@@ -1,130 +1,233 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+/* 1. CARA BARU TAILWIND V4 MEMANGGIL ENGINE-NYA */
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* 2. DAFTARKAN PLUGIN ANIMASI SHADCN */
+@plugin "tailwindcss-animate";
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+/* 3. KONFIGURASI TEMA PENGGANTI tailwind.config.ts */
+@theme {
+  --font-outfit: "Outfit", sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-dark-surface: hsl(var(--dark-surface));
+  --color-dark-surface-foreground: hsl(var(--dark-surface-foreground));
+
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
+/* 4. VARIABEL WARNA BAWAAN LOVABLE KAMU */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+  :root {
+    --primary: 228 52% 20%;
+    --primary-foreground: 180 33% 97%;
+    --secondary: 210 100% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 177 85% 50%;
+    --accent-foreground: 228 52% 20%;
+    --background: 180 33% 97%;
+    --foreground: 228 52% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 228 52% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 228 52% 20%;
+    --muted: 210 20% 94%;
+    --muted-foreground: 228 30% 40%;
+    --dark-surface: 228 52% 12%;
+    --dark-surface-foreground: 180 33% 97%;
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 210 100% 50%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --radius: 0.75rem;
+
+    /* Glow & Gradients */
+    --glow-cyan: 0 0 30px hsl(177 85% 50% / 0.5);
+    --glow-blue: 0 0 30px hsl(210 100% 50% / 0.5);
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(228 52% 20%),
+      hsl(228 52% 30%)
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      hsl(177 85% 50%),
+      hsl(210 100% 50%)
+    );
+    --gradient-hero: linear-gradient(
+      180deg,
+      hsl(180 33% 97%) 0%,
+      hsl(210 30% 95%) 100%
+    );
+    --gradient-dark: linear-gradient(
+      180deg,
+      hsl(228 52% 12%) 0%,
+      hsl(228 52% 8%) 100%
+    );
   }
-  body {
-    @apply bg-background text-foreground;
+
+  .dark {
+    --background: 228 52% 8%;
+    --foreground: 180 33% 97%;
+    --card: 228 52% 12%;
+    --card-foreground: 180 33% 97%;
+    --popover: 228 52% 12%;
+    --popover-foreground: 180 33% 97%;
+    --muted: 228 40% 20%;
+    --muted-foreground: 210 20% 70%;
+    --border: 228 40% 25%;
+    --input: 228 40% 25%;
+  }
+}
+
+/* 5. ATURAN RESET BASE SHADCN */
+@layer base {
+  .container {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  @media (min-width: 768px) {
+    .container {
+      padding-left: 4rem !important;
+      padding-right: 4rem !important;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 6rem !important;
+      padding-right: 6rem !important;
+    }
+  }
+
+  * {
+    @apply border-border;
   }
   html {
-    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-outfit antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-space tracking-tight;
+  }
+}
+
+/* 6. COMPONENT CLASS LOVABLE */
+@layer components {
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl border border-white/20;
+  }
+  .glass-dark {
+    @apply bg-dark-surface/90 backdrop-blur-xl border border-white/10;
+  }
+  .neon-border {
+    @apply border-2 border-accent shadow-[0_0_20px_hsl(177_85%_50%_/_0.3)];
+  }
+  .neon-glow {
+    box-shadow: var(--glow-cyan);
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent;
+  }
+  .bento-card {
+    @apply rounded-2xl p-6 bg-card border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300;
+  }
+  .section-padding {
+    @apply py-24 md:py-36;
+  }
+}
+
+/* 7. ANIMASI KUSTOM */
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  .animate-gradient {
+    animation: gradient 8s ease infinite;
+    background-size: 200% 200%;
+  }
+  .animate-wave {
+    animation: wave 10s linear infinite;
+  }
+  .animate-wave-slow {
+    animation: wave 15s linear infinite;
+  }
+
+  @keyframes wave {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(3deg);
+    }
+  }
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px hsl(177 85% 50% / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(177 85% 50% / 0.6);
+    }
+  }
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  .text-balance {
+    text-wrap: balance;
   }
 }
