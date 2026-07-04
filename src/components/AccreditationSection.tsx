@@ -51,7 +51,7 @@ export function AccreditationSection() {
               height={850}
               className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-500"
             />
-            
+
             {/* Zoom Overlay on Hover */}
             <div className="absolute inset-0 bg-dark-surface/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <div className="w-12 h-12 rounded-full bg-background/90 backdrop-blur flex items-center justify-center shadow-lg">
@@ -76,37 +76,46 @@ export function AccreditationSection() {
         <div className="max-w-5xl mx-auto border-t border-border/50 my-12" />
 
         {/* Certification Badges Row (Below the main BAN-PT) */}
-        <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {[
-            {
-              name: "SAP ERP",
-              fullName: "University Alliance Partner",
-              grade: "Certified",
-              description: "Kurikulum Terintegrasi & Sertifikasi SAP ERP",
-              icon: Award,
-            },
-            {
-              name: "Oracle Academy",
-              fullName: "Institutional Member",
-              grade: "Certified",
-              description: "Sertifikasi Database & Java Programming",
-              icon: CheckCircle2,
-            },
-            {
-              name: "Siap Kerja",
-              fullName: "Employment Rate",
-              grade: "90%+",
-              description: "Lulusan mendapatkan kerja dalam waktu singkat",
-              icon: Star,
-            },
-          ].map((accred, index) => (
+        <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {(
+            [
+              {
+                name: "SAP ERP",
+                fullName: "University Alliance Partner",
+                grade: "Certified",
+                description: "Kurikulum Terintegrasi & Sertifikasi SAP ERP",
+                logo: "/SAP_2011_logo.svg",
+              },
+              {
+                name: "Oracle Academy",
+                fullName: "Institutional Member",
+                grade: "Certified",
+                description: "Sertifikasi Database & Java Programming",
+                logo: "/oracle-seeklogo.png",
+                logoClassName: "scale-150",
+              },
+            ] as Array<{
+              name: string;
+              fullName: string;
+              grade: string;
+              description: string;
+              logo: string;
+              logoClassName?: string;
+            }>
+          ).map((accred, index) => (
             <div
               key={index}
               className="group relative p-6 rounded-2xl bg-card border border-border/50 hover:border-secondary/30 hover:shadow-lg transition-all duration-300 text-center"
             >
-              {/* Icon */}
-              <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-secondary/5 to-accent/5 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
-                <accred.icon className="w-6 h-6 text-secondary" />
+              {/* Icon / Logo */}
+              <div className="w-24 h-16 mx-auto flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300 p-2">
+                <Image
+                  src={accred.logo}
+                  alt={accred.name}
+                  width={120}
+                  height={60}
+                  className={`w-auto h-10 object-contain ${accred.logoClassName || ""}`}
+                />
               </div>
 
               {/* Name */}
@@ -130,7 +139,7 @@ export function AccreditationSection() {
 
       {/* Fullscreen Certificate Modal */}
       {isOpen && (
-        <div 
+        <div
           onClick={() => setIsOpen(false)}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in cursor-zoom-out"
         >
@@ -142,7 +151,7 @@ export function AccreditationSection() {
             <X className="w-6 h-6" />
           </button>
 
-          <div 
+          <div
             className="relative max-w-4xl max-h-[85vh] w-full rounded-2xl overflow-hidden border border-white/20 bg-card shadow-2xl animate-scale-in cursor-default"
             onClick={(e) => e.stopPropagation()}
           >

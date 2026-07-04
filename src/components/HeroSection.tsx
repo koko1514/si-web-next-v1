@@ -108,7 +108,7 @@ export function HeroSection() {
             </div>
 
             {/* Stats */}
-            <div
+            {/* <div
               className="flex flex-wrap justify-center lg:justify-start gap-8 pt-4 animate-fade-in"
               style={{ animationDelay: "0.4s" }}
             >
@@ -126,7 +126,7 @@ export function HeroSection() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Right Abstract Element */}

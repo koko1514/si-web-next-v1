@@ -12,6 +12,7 @@ interface InstagramPost {
   media_type: string;
   caption: string;
   timestamp: string;
+  rawTimestamp?: string;
   permalink: string;
 }
 
@@ -134,16 +135,32 @@ export function SocialHubSection() {
 
   useEffect(() => {
     const fetchInstagramPosts = async () => {
-      const token = process.env.NEXT_PUBLIC_INSTAGRAM_TOKEN;
-      if (!token) return;
+      const tokens = [
+        process.env.NEXT_PUBLIC_INSTAGRAM_TOKEN,
+        process.env.NEXT_PUBLIC_INSTAGRAM_TOKEN_2
+      ].filter(Boolean) as string[];
+
+      if (tokens.length === 0) return;
 
       try {
-        const response = await fetch(
-          `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${token}`
-        );
-        const data = (await response.json()) as InstagramApiResponse;
-        if (data && data.data) {
-          const formattedPosts = data.data.map((item: RawInstagramPost) => {
+        const fetchPromises = tokens.map(async (token) => {
+          try {
+            const response = await fetch(
+              `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${token}`
+            );
+            const data = (await response.json()) as InstagramApiResponse;
+            return data.data || [];
+          } catch (err) {
+            console.error("Error fetching for token:", err);
+            return [];
+          }
+        });
+
+        const results = await Promise.all(fetchPromises);
+        const combinedRawPosts = results.flat();
+
+        if (combinedRawPosts.length > 0) {
+          const formattedPosts = combinedRawPosts.map((item: RawInstagramPost) => {
             const date = new Date(item.timestamp);
             const timeDiff = Math.abs(new Date().getTime() - date.getTime());
             const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
@@ -165,9 +182,18 @@ export function SocialHubSection() {
               media_type: item.media_type,
               caption: item.caption || "",
               timestamp: displayTime,
+              rawTimestamp: item.timestamp,
               permalink: item.permalink || "https://www.instagram.com/sistem.informasi.ithb/",
             };
           });
+
+          // Sort combined posts by rawTimestamp (latest first)
+          formattedPosts.sort((a, b) => {
+            const timeA = a.rawTimestamp ? new Date(a.rawTimestamp).getTime() : 0;
+            const timeB = b.rawTimestamp ? new Date(b.rawTimestamp).getTime() : 0;
+            return timeB - timeA;
+          });
+
           setPosts(formattedPosts);
         }
       } catch (error) {

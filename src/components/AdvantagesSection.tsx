@@ -110,12 +110,10 @@ export function AdvantagesSection() {
         </div>
 
         {/* Additional Stats Row */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="mt-16 grid grid-cols-2 gap-6 max-w-xl mx-auto">
           {[
             { icon: Award, value: "B", label: "Akreditasi BAN-PT" },
-            { icon: Users, value: "2000+", label: "Alumni" },
-            { icon: Globe, value: "15+", label: "Negara Partner" },
-            { icon: Briefcase, value: "92%", label: "Employment Rate" },
+            { icon: Briefcase, value: "90%+", label: "Employment Rate" },
           ].map((stat, index) => (
             <div
               key={index}
