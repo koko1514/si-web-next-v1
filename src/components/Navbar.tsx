@@ -2,16 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { name: "Beranda", href: "#hero" },
-  { name: "Tentang", href: "#about" },
-  { name: "Keunggulan", href: "#advantages" },
-  { name: "Prestasi", href: "#achievements" },
-  { name: "Metaverse", href: "#metaverse" },
-  { name: "Galeri", href: "#social" },
+  { name: "Beranda", href: "/#hero" },
+  { name: "Visi & Misi", href: "/#about" },
+  { name: "Karier", href: "/#career" },
+  { name: "Keunggulan", href: "/#advantages" },
+  { name: "Dosen", href: "/#lecturers" },
+  { name: "Galeri", href: "/galeri" },
 ];
 
 export function Navbar() {
@@ -19,6 +20,28 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    setIsMobileMenuOpen(false);
+    
+    const isHomePage = window.location.pathname === "/";
+    
+    if (isHomePage && (href.startsWith("/#") || href.startsWith("#"))) {
+      e.preventDefault();
+      const targetId = href.replace("/#", "").replace("#", "");
+      const element = document.getElementById(targetId);
+      
+      if (element) {
+        setIsNavigating(true);
+        setIsVisible(true);
+        element.scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => {
+          setIsNavigating(false);
+        }, 1500);
+      }
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +51,9 @@ export function Navbar() {
       setIsScrolled(currentScrollY > 20);
 
       // Smart Hide/Show Logic
-      if (currentScrollY > lastScrollY && currentScrollY > 400) {
+      if (isNavigating) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 400) {
         // Scrolling down & passed a certain point -> Hide
         setIsVisible(false);
       } else {
@@ -41,7 +66,7 @@ export function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, isNavigating]);
 
   return (
     <header
@@ -73,6 +98,7 @@ export function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
                 className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-secondary transition-colors duration-200 rounded-lg hover:bg-secondary/5"
               >
                 {link.name}
@@ -82,8 +108,8 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button variant="hero" size="sm">
-              Daftar Sekarang
+            <Button variant="hero" size="sm" asChild>
+              <Link href="/metaverse">Our Metaverse</Link>
             </Button>
           </div>
 
@@ -109,14 +135,16 @@ export function Navbar() {
                   <a
                     key={link.name}
                     href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={(e) => handleLinkClick(e, link.href)}
                     className="px-4 py-3 text-sm font-medium text-foreground hover:text-secondary hover:bg-secondary/5 rounded-lg transition-colors duration-200"
                   >
                     {link.name}
                   </a>
                 ))}
-                <Button variant="hero" className="mt-2">
-                  Daftar Sekarang
+                <Button variant="hero" className="mt-2" asChild>
+                  <Link href="/metaverse" onClick={() => setIsMobileMenuOpen(false)}>
+                    Virtual Tour
+                  </Link>
                 </Button>
               </div>
             </div>

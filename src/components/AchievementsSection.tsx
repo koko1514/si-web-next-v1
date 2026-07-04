@@ -1,69 +1,33 @@
-import { Trophy, Calendar, MapPin, ArrowRight } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Trophy, Calendar, MapPin, ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const achievements = [
-  {
-    type: "achievement",
-    title: "Juara 1 Hackathon Nasional",
-    date: "Desember 2024",
-    description:
-      "Tim mahasiswa SI ITHB memenangkan kompetisi hackathon tingkat nasional dengan inovasi smart city.",
-    image:
-      "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
-    category: "Kompetisi",
-  },
-  {
-    type: "event",
-    title: "IT Career Fair 2025",
-    date: "15 Januari 2025",
-    description:
-      "Pameran karir terbesar dengan partisipasi 30+ perusahaan teknologi terkemuka.",
-    image:
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
-    category: "Event",
-  },
-  {
-    type: "achievement",
-    title: "Publikasi Jurnal Internasional",
-    date: "November 2024",
-    description:
-      "Penelitian kolaboratif dosen dan mahasiswa tentang AI dipublikasikan di jurnal Q1.",
-    image:
-      "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=800&q=80",
-    category: "Riset",
-  },
-  {
-    type: "event",
-    title: "Workshop Cloud Computing",
-    date: "20 Januari 2025",
-    description:
-      "Pelatihan intensif AWS dan Google Cloud bersama praktisi industri.",
-    image:
-      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
-    category: "Workshop",
-  },
-  {
-    type: "achievement",
-    title: "Best Paper Award ICITS 2024",
-    date: "Oktober 2024",
-    description:
-      "Penghargaan paper terbaik di International Conference on IT Systems.",
-    image:
-      "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80",
-    category: "Konferensi",
-  },
-  {
-    type: "event",
-    title: "Tech Talk: Future of AI",
-    date: "25 Januari 2025",
-    description: "Seminar eksklusif bersama pakar AI dari Silicon Valley.",
-    image:
-      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80",
-    category: "Seminar",
-  },
-];
+import { galleryItems } from "@/data/galleryData";
 
 export function AchievementsSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedTitle, setSelectedTitle] = useState("");
+  const [selectedWidth, setSelectedWidth] = useState(800);
+  const [selectedHeight, setSelectedHeight] = useState(600);
+
+  const achievementsList = galleryItems.filter((item) => item.type === "achievement");
+  const eventsList = galleryItems.filter((item) => item.type === "event");
+
+  // Re-ordered dynamically to balance the 3-column masonry grid perfectly on desktop
+  const achievements = [
+    achievementsList[0], // Juara 1 Business Case
+    eventsList[0],       // Malam Akrab
+    eventsList[1],       // SI Company Visit
+    eventsList[2],       // Virtual Reality
+    achievementsList[2], // Juara 2 Widyatama
+    achievementsList[1], // Juara 2 Business Plan
+  ].filter(Boolean);
+
   return (
     <section
       id="achievements"
@@ -87,86 +51,123 @@ export function AchievementsSection() {
           </p>
         </div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Masonry Layout Grid */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
           {achievements.map((item, index) => (
             <div
               key={index}
-              className={`group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 ${
-                index === 0 ? "md:col-span-2 lg:col-span-2 lg:row-span-2" : ""
-              }`}
+              onClick={() => {
+                setSelectedImage(item.image);
+                setSelectedTitle(item.title);
+                setSelectedWidth(item.width);
+                setSelectedHeight(item.height);
+                setIsModalOpen(true);
+              }}
+              className="break-inside-avoid bg-card border border-border/60 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:border-accent/30 transition-all duration-500 flex flex-col mb-6 relative group cursor-pointer"
             >
-              {/* Image */}
-              <div
-                className={`relative ${index === 0 ? "aspect-[16/10]" : "aspect-[4/3]"} overflow-hidden`}
-              >
-                <img
+              {/* Image Frame */}
+              <div className="relative w-full overflow-hidden bg-muted/30">
+                <Image
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  width={item.width || 800}
+                  height={item.height || 600}
+                  className="w-full h-auto object-contain group-hover:scale-[1.03] transition-transform duration-500"
                 />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-dark-surface/50 to-transparent opacity-80" />
+                {/* Dark Gradient Overlay for text readability (darkens on hover for better contrast when description expands) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20 opacity-75 group-hover:opacity-95 transition-opacity duration-500 z-10" />
               </div>
 
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+              {/* Absolute Text Content Overlay */}
+              <div className="absolute inset-0 p-3 sm:p-4 md:p-5 flex flex-col justify-end z-20 text-white pointer-events-none">
                 {/* Category Badge */}
-                <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                <div className="flex items-center gap-2 mb-1.5">
                   <span
-                    className={`px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${
-                      item.type === "achievement"
-                        ? "bg-accent/20 text-accent"
-                        : "bg-secondary/20 text-secondary"
-                    }`}
+                    className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold flex items-center gap-1 bg-white/20 text-white border border-white/10"
                   >
                     {item.type === "achievement" ? (
-                      <Trophy className="w-3 h-3 inline mr-1" />
+                      <Trophy className="w-3 h-3 text-yellow-400 fill-yellow-400/20" />
                     ) : (
-                      <Calendar className="w-3 h-3 inline mr-1" />
+                      <Calendar className="w-3 h-3 text-sky-400" />
                     )}
                     {item.category}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3
-                  className={`font-bold text-dark-surface-foreground mb-1 sm:mb-2 ${
-                    index === 0 ? "text-lg sm:text-xl md:text-2xl" : "text-base sm:text-lg"
-                  }`}
-                >
+                <h3 className="font-bold text-white mb-1 text-xs sm:text-sm md:text-base lg:text-lg group-hover:text-accent transition-colors duration-300">
                   {item.title}
                 </h3>
 
                 {/* Date */}
-                <p className="text-dark-surface-foreground/60 text-xs sm:text-sm mb-1.5 sm:mb-2">
+                <p className="text-white/60 text-[10px] sm:text-xs mb-1">
                   {item.date}
                 </p>
 
-                {/* Description - Only show on larger card or hover */}
-                <p
-                  className={`text-dark-surface-foreground/70 text-xs sm:text-sm leading-relaxed ${
-                    index === 0 ? "block" : "hidden md:group-hover:block"
-                  }`}
+                {/* Description - Smooth Expandable */}
+                <div
+                  className="grid transition-all duration-500 ease-in-out grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100 group-hover:mt-2"
                 >
-                  {item.description}
-                </p>
+                  <div className="overflow-hidden">
+                    <p className="text-white/80 text-[10px] sm:text-[11px] md:text-xs leading-normal line-clamp-2 md:line-clamp-3">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Hover Border Effect */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/50 rounded-2xl transition-colors duration-300 pointer-events-none" />
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-accent/50 rounded-2xl transition-colors duration-300 pointer-events-none z-30" />
             </div>
           ))}
         </div>
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="group">
-            Lihat Semua Prestasi
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link href="/galeri">
+            <Button variant="outline" size="lg" className="group">
+              Lihat Galeri & Event
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </div>
       </div>
+
+      {/* Fullscreen Image Modal */}
+      {isModalOpen && (
+        <div 
+          onClick={() => setIsModalOpen(false)}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in cursor-zoom-out"
+        >
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="absolute top-6 right-6 w-12 h-12 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-[110] cursor-pointer"
+            aria-label="Close modal"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <div 
+            className="relative rounded-2xl overflow-hidden border border-white/20 bg-card shadow-2xl animate-scale-in cursor-default flex items-center justify-center"
+            style={{ 
+              aspectRatio: `${selectedWidth} / ${selectedHeight}`,
+              maxWidth: "90vw",
+              maxHeight: "85vh",
+              width: "auto",
+              height: "auto"
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={selectedImage}
+              alt={selectedTitle}
+              width={selectedWidth}
+              height={selectedHeight}
+              className="w-full h-full object-contain"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -6,7 +6,6 @@ import { AchievementsSection } from "@/components/AchievementsSection";
 import { AccreditationSection } from "@/components/AccreditationSection";
 import { LecturersSection } from "@/components/LecturersSection";
 import { CareerSection } from "@/components/CareerSection";
-import { MetaverseSection } from "@/components/MetaverseSection";
 import { SocialHubSection } from "@/components/SocialHubSection";
 import { Footer } from "@/components/Footer";
 
@@ -22,7 +21,6 @@ export default function Home() {
         <AchievementsSection />
         <LecturersSection />
         <AccreditationSection />
-        <MetaverseSection />
         <SocialHubSection />
       </main>
       <Footer />

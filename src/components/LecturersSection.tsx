@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Mail, Linkedin, GraduationCap, Award } from "lucide-react";
 
 const lecturers = [
@@ -5,48 +6,64 @@ const lecturers = [
     name: "Tamsir Hasudungan Sirait, S.Kom., M.T.",
     role: "Kepala Program Studi Sistem Informasi",
     expertise: [
-      "Enterprise Resource Planning (ERP)",
-      "Business Process Management",
-      "System Architecture",
+      "Enterprise System & ERP",
+      "Large Scale Data Management",
+      "Manajemen Proyek SI",
+      "Komputasi Net Sentris",
     ],
-    image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80",
+    image: "/tamsir.png",
+    linkedin: "https://www.linkedin.com/in/tamsir-h-sirait-77b09824/",
+    email: "tamsir@ithb.ac.id",
   },
   {
     name: "Herastia Maharani, S.T., M.T.",
-    role: "Dosen Senior & Peneliti",
-    expertise: ["Artificial Intelligence", "Machine Learning", "Data Science"],
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+    role: "Dosen Bidang Basis Data & HCI",
+    expertise: [
+      "Sistem Basis Data & HCI",
+      "UI/UX Design & Data Mining",
+      "E-Commerce & Applied IT/IS",
+      "Manajemen Data & Informasi",
+    ],
+    image: "/mara.png",
+    linkedin: "https://www.linkedin.com/in/herastia-maharani-ocp-97709538/",
+    email: "herastia@ithb.ac.id",
   },
   {
     name: "Cut Fiarni, S.Si., M.T.",
-    role: "Dosen Keahlian Manajemen TI",
+    role: "Dosen Bidang Proses Bisnis & Analisis Data",
     expertise: [
-      "IT Infrastructure Management",
-      "Business Intelligence",
-      "IT Governance",
+      "Analisis & Manajemen Proses Bisnis",
+      "Analisis Data & Kinerja Sistem",
+      "Sistem Pendukung Keputusan",
+      "E-Business & IT Governance",
     ],
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80",
+    image: "/rani.jpg",
+    linkedin: "https://www.linkedin.com/in/cut-fiarni/",
+    email: "cutfiarni@ithb.ac.id",
   },
   {
     name: "Ivan Michael Siregar, S.T., M.T.",
-    role: "Dosen Keahlian Basis Data & ERP",
+    role: "Dosen Bidang Algoritma & Pemrograman",
     expertise: [
-      "Database Administration",
-      "Large Scale Data Management",
-      "Odoo ERP",
+      "Algoritma & Struktur Data",
+      "Dasar & Integrasi Pemrograman",
+      "Pemrograman Mobile",
+      "Teknologi Integratif",
     ],
-    image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80",
+    image: "/ivan.jpg",
+    linkedin: "https://www.linkedin.com/in/imsiregar/",
+    email: "ivan@ithb.ac.id",
   },
   {
-    name: "Elisafina Siswanto, S.T., M.T.",
-    role: "Dosen Keahlian Rekayasa Perangkat Lunak",
-    expertise: ["Software Architecture", "Web Programming", "Java Programming"],
-    image:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80",
+    name: "Yosi Yonata, S.T., M.T.",
+    role: "Dosen Bidang Teknologi Web & Humaniora",
+    expertise: [
+      "Pemrograman & Proyek Web",
+      "Knowledge Management",
+      "Isu Sosial & Profesional SI",
+      "Bahasa Indonesia",
+    ],
+    image: "/placeholder.svg",
   },
 ];
 
@@ -87,30 +104,40 @@ export function LecturersSection() {
             >
               {/* Photo Frame */}
               <div className="aspect-[4/5] relative overflow-hidden bg-muted">
-                <img
+                <Image
                   src={lecturer.image}
                   alt={lecturer.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                  {/* Social Icons inside photo on hover */}
-                  <div className="flex gap-3">
-                    <a
-                      href="#"
-                      className="w-8 h-8 rounded-lg bg-background/95 backdrop-blur flex items-center justify-center shadow hover:bg-secondary hover:text-secondary-foreground transition-colors"
-                      aria-label="Email"
-                    >
-                      <Mail className="w-4 h-4" />
-                    </a>
-                    <a
-                      href="#"
-                      className="w-8 h-8 rounded-lg bg-background/95 backdrop-blur flex items-center justify-center shadow hover:bg-secondary hover:text-secondary-foreground transition-colors"
-                      aria-label="LinkedIn"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
+                {(lecturer.email || lecturer.linkedin) && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                    {/* Social Icons inside photo on hover */}
+                    <div className="flex gap-3">
+                      {lecturer.email && (
+                        <a
+                          href={`mailto:${lecturer.email}`}
+                          className="w-8 h-8 rounded-lg bg-background/95 backdrop-blur flex items-center justify-center shadow hover:bg-secondary hover:text-secondary-foreground transition-colors"
+                          aria-label="Email"
+                        >
+                          <Mail className="w-4 h-4" />
+                        </a>
+                      )}
+                      {lecturer.linkedin && (
+                        <a
+                          href={lecturer.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-8 h-8 rounded-lg bg-background/95 backdrop-blur flex items-center justify-center shadow hover:bg-secondary hover:text-secondary-foreground transition-colors"
+                          aria-label="LinkedIn"
+                        >
+                          <Linkedin className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               {/* Text Info */}

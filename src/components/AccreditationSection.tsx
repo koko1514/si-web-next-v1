@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Award, CheckCircle2, Star, X, ZoomIn } from "lucide-react";
 
 export function AccreditationSection() {
@@ -43,9 +44,11 @@ export function AccreditationSection() {
             onClick={() => setIsOpen(true)}
             className="relative rounded-2xl overflow-hidden border border-border shadow-2xl bg-background cursor-zoom-in group/img"
           >
-            <img
+            <Image
               src={certImageSrc}
               alt="Sertifikat Akreditasi BAN-PT Sistem Informasi ITHB"
+              width={1200}
+              height={850}
               className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-500"
             />
             
@@ -127,19 +130,27 @@ export function AccreditationSection() {
 
       {/* Fullscreen Certificate Modal */}
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in">
+        <div 
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in cursor-zoom-out"
+        >
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10"
+            className="absolute top-6 right-6 w-12 h-12 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-10 cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-6 h-6" />
           </button>
 
-          <div className="relative max-w-4xl max-h-[85vh] w-full rounded-2xl overflow-hidden border border-white/20 bg-card shadow-2xl animate-scale-in">
-            <img
+          <div 
+            className="relative max-w-4xl max-h-[85vh] w-full rounded-2xl overflow-hidden border border-white/20 bg-card shadow-2xl animate-scale-in cursor-default"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
               src={certImageSrc}
               alt="Sertifikat Akreditasi BAN-PT Sistem Informasi ITHB (Fullscreen)"
+              width={1600}
+              height={1100}
               className="w-full h-auto max-h-[85vh] object-contain mx-auto"
             />
           </div>

@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Rocket, Lightbulb, GraduationCap, Zap, BookOpen } from "lucide-react";
+import { ArrowRight, Play, Rocket, Lightbulb, GraduationCap, Zap, BookOpen, X } from "lucide-react";
 import dynamic from "next/dynamic";
 
 const CustomCoin = dynamic(() => import("./CustomCoin"), {
@@ -14,6 +15,8 @@ const CustomCoin = dynamic(() => import("./CustomCoin"), {
 });
 
 export function HeroSection() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
   return (
     <section
       id="hero"
@@ -66,7 +69,6 @@ export function HeroSection() {
               </span>
             </h1>
 
-
             <p
               className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 animate-fade-in leading-relaxed"
               style={{ animationDelay: "0.2s" }}
@@ -75,7 +77,8 @@ export function HeroSection() {
               <span className="text-secondary font-semibold">
                 berstandar global
               </span>
-              , berkarakter unggul, dan siap membawa perubahan positif di era transformasi digital.
+              , berkarakter unggul, dan siap membawa perubahan positif di era
+              transformasi digital.
             </p>
 
             {/* CTA Buttons */}
@@ -84,12 +87,21 @@ export function HeroSection() {
               style={{ animationDelay: "0.3s" }}
             >
               <Button variant="hero" size="lg" className="group" asChild>
-                <a href="https://akademik.ithb.ac.id/penerimaan/index.php?pg=login" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://www.ithb.ac.id/sistem-informasi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Mulai Perjalananmu
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
-              <Button variant="heroOutline" size="lg" className="group">
+              <Button 
+                variant="heroOutline" 
+                size="lg" 
+                className="group"
+                onClick={() => setIsVideoOpen(true)}
+              >
                 <Play className="w-5 h-5" />
                 Lihat Video Profil
               </Button>
@@ -186,6 +198,35 @@ export function HeroSection() {
           <div className="w-1.5 h-3 bg-secondary rounded-full animate-pulse" />
         </div>
       </div>
+
+      {/* Video Modal */}
+      {isVideoOpen && (
+        <div 
+          onClick={() => setIsVideoOpen(false)}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in cursor-zoom-out"
+        >
+          <button
+            onClick={() => setIsVideoOpen(false)}
+            className="absolute top-6 right-6 w-12 h-12 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors z-[110] cursor-pointer"
+            aria-label="Close video"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <div 
+            className="relative w-full max-w-4xl aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black shadow-2xl animate-scale-in cursor-default"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <iframe
+              src="https://www.youtube.com/embed/s3nJ9gU1m5g?autoplay=1"
+              title="Stories Behind The Building: Virtual Campus Tour ITHB"
+              className="w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
