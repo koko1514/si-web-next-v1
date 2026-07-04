@@ -16,7 +16,7 @@ export const galleryItems: GalleryItem[] = [
     date: "Desember 2024",
     description:
       "Kolaborasi lintas universitas tim 'ALOY' (Richard Yahya - ITHB, Nathaniel J. R. - ITB, Adrianus Z. O. - UNPAR) meraih Juara 1 National Business Case Competition Vol 2.0.",
-    image: "/businesscasejuara1.jpg",
+    image: "/prestasi/businesscasejuara1.jpg",
     category: "Kompetisi",
     width: 1510,
     height: 830,
@@ -27,7 +27,7 @@ export const galleryItems: GalleryItem[] = [
     date: "November 2024",
     description:
       "Kolaborasi lintas jurusan ITHB oleh Ricky Wijaya (Informatika 2023), Ferdiansyah R. A. Wicaksono (Sistem Informasi 2023), dan Stevio V. Rerung (Teknik Industri 2023) berhasil meraih Juara 2 dalam Christian Business Plan Competition Universitas Kristen Maranatha.",
-    image: "/businessplanjuara2.png",
+    image: "/prestasi/businessplanjuara2.png",
     category: "Kompetisi",
     width: 971,
     height: 2402,
@@ -38,7 +38,7 @@ export const galleryItems: GalleryItem[] = [
     date: "Desember 2019",
     description:
       "Tim mahasiswa Sistem Informasi ITHB angkatan 2018 yang beranggotakan Priskarinda Putri Analicia Destiny, Ribka Wulan Simbolon, dan Lu'Lu'Ah Zakiyah meraih Juara 2 dalam Startup Proposal Contest.",
-    image: "/juarainter2.webp",
+    image: "/prestasi/juarainter2.webp",
     category: "Kompetisi",
     width: 688,
     height: 686,
