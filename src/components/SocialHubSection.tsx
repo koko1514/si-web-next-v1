@@ -14,6 +14,7 @@ interface InstagramPost {
   timestamp: string;
   rawTimestamp?: string;
   permalink: string;
+  username?: string;
 }
 
 interface RawInstagramPost {
@@ -24,6 +25,7 @@ interface RawInstagramPost {
   timestamp: string;
   permalink?: string;
   thumbnail_url?: string;
+  username?: string;
 }
 
 interface InstagramApiResponse {
@@ -70,64 +72,21 @@ const mockPosts: InstagramPost[] = [
     caption: "We have exciting news! 📢\n\nThe new Information Systems (IS) minor is now available to undergraduate students across ALL majors, beginning in Fall 2025. Students will have the opportunity to explore how technology intersects with organizations and society.\n\nApply with the link in our bio by May 30th! 📝✨ #magangSAP #erpsystem #siithb",
     timestamp: "15 MEI 2025",
     permalink: "https://www.instagram.com/sistem.informasi.ithb/",
-  },
-  {
-    id: "6",
-    media_url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80",
-    media_type: "IMAGE",
-    caption: "Congrats, Prof. H! 🏆\n\nA huge congratulations to Professor Larry Heimann, one of our undergraduate Information Systems professors, on receiving the William H. and Frances S. Ryan Award for Meritorious Teaching.\n\nFrom his students and TA staff, we just wanted to say congratulations! 🌟 #achievement #businesscompetition #champions",
-    timestamp: "24 APR 2025",
-    permalink: "https://www.instagram.com/sistem.informasi.ithb/",
-  },
-  {
-    id: "7",
-    media_url: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80",
-    media_type: "VIDEO",
-    caption: "What a celebration! 🎉 Nearly 100 students, staff, and faculty joined us for the IS End of Year Celebration & Senior Sendoff! We couldn't be more grateful for the energy, laughter, and community love that you brought!\n\nBig thanks to our incredible IS Ambassadors for helping plan and run the event, and celebrate our seniors and entire community! 🎓✨ #capstoneproject #itdevelopment #umkm",
-    timestamp: "6 MEI 2025",
-    permalink: "https://www.instagram.com/sistem.informasi.ithb/",
-  },
-  {
-    id: "8",
-    media_url: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=600&q=80",
-    media_type: "IMAGE",
-    caption: "Nice to see a familiar face! 😊\n\nOver Carnival Weekend, many students, staff, and alumni attended the IS Happy Hour where they had the chance to catch up with each other on latest news, projects, and well being. Thank you to everyone who attended, and can't wait to see you next year!\n\n#alumni #sharingsession #siithb",
-    timestamp: "10 APR 2025",
-    permalink: "https://www.instagram.com/sistem.informasi.ithb/",
-  },
-  {
-    id: "9",
-    media_url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80",
-    media_type: "IMAGE",
-    caption: "Happy Graduation Day! 🎓✨ Selamat kepada wisudawan Program Studi Sistem Informasi ITHB. Perjalanan baru Anda di dunia profesional dimulai hari ini! Teruslah berkarya dan membawa dampak positif! #graduation #alumni #ithb #bandung",
-    timestamp: "24 APR 2025",
-    permalink: "https://www.instagram.com/sistem.informasi.ithb/",
-  },
-  {
-    id: "10",
-    media_url: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
-    media_type: "IMAGE",
-    caption: "Ngoding bareng di laboratorium komputer! 💻 Mahasiswa sedang mengerjakan proyek terintegrasi untuk mata kuliah Dasar Pemrograman. Semangat mendesain solusi digital masa depan! #programming #coders #laboratory #siithb",
-    timestamp: "5 MEI 2025",
-    permalink: "https://www.instagram.com/sistem.informasi.ithb/",
-  },
-  {
-    id: "11",
-    media_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=80",
-    media_type: "IMAGE",
-    caption: "Suasana belajar di perpustakaan ITHB. Tempat terfavorit mahasiswa untuk berkolaborasi, mendiskusikan tugas kelompok, atau sekadar mencari ketenangan dalam riset. 📚🔍 #library #studying #research #siithb",
-    timestamp: "10 JUL 2025",
-    permalink: "https://www.instagram.com/sistem.informasi.ithb/",
-  },
-  {
-    id: "12",
-    media_url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80",
-    media_type: "IMAGE",
-    caption: "Kuliah umum tentang Cloud Computing & DevOps bersama CTO terkemuka. Wawasan industri yang sangat berharga untuk kesiapan karier global mahasiswa SI ITHB! 🌐☁️ #cloudcomputing #devops #guestlecture",
-    timestamp: "23 AGU 2025",
-    permalink: "https://www.instagram.com/sistem.informasi.ithb/",
-  },
+  }
 ];
+
+const getProfileImage = (username?: string) => {
+  if (!username) return "/logo.png";
+  
+  // Mapping account usernames to their custom profile pictures in public/ folder
+  const profilePics: Record<string, string> = {
+    "sistem.informasi.ithb": "/logo.png",
+    "iko15_avatar": "/logo.png", // Fallback to logo.png by default, or place a file named iko15_avatar.jpg in public/
+    "hmsi.ithb": "/hmsi.ithb.jpg",    // Map to the uploaded hmsi.ithb.jpg file
+  };
+  
+  return profilePics[username] || "/logo.png";
+};
 
 export function SocialHubSection() {
   const [posts, setPosts] = useState<InstagramPost[]>(mockPosts);
@@ -146,7 +105,7 @@ export function SocialHubSection() {
         const fetchPromises = tokens.map(async (token) => {
           try {
             const response = await fetch(
-              `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${token}`
+              `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username&access_token=${token}`
             );
             const data = (await response.json()) as InstagramApiResponse;
             return data.data || [];
@@ -184,6 +143,7 @@ export function SocialHubSection() {
               timestamp: displayTime,
               rawTimestamp: item.timestamp,
               permalink: item.permalink || "https://www.instagram.com/sistem.informasi.ithb/",
+              username: item.username || "sistem.informasi.ithb",
             };
           });
 
@@ -325,7 +285,7 @@ export function SocialHubSection() {
                       </div>
                     </div>
                     <span className="text-xs font-bold text-foreground">
-                      sistem.informasi.ithb
+                      {post.username || "sistem.informasi.ithb"}
                     </span>
                   </div>
 
@@ -339,15 +299,19 @@ export function SocialHubSection() {
                 <div className="pt-4 border-t border-border/60 flex items-center justify-between mt-auto">
                   <div className="flex items-center gap-2">
                     <Image
-                      src="/logo.png"
-                      alt="SI ITHB"
+                      src={getProfileImage(post.username)}
+                      alt={post.username || "Instagram User"}
                       width={24}
                       height={24}
                       className="rounded-full object-cover border border-border"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "/logo.png";
+                      }}
                     />
                     <div className="flex flex-col">
                       <span className="text-[10px] font-bold text-foreground leading-none">
-                        @sistem.informasi.ithb
+                        @{post.username || "sistem.informasi.ithb"}
                       </span>
                       <span className="text-[8px] text-muted-foreground mt-0.5">
                         {post.timestamp}
