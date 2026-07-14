@@ -81,16 +81,44 @@ const getProfileImage = (username?: string) => {
   // Mapping account usernames to their custom profile pictures in public/ folder
   const profilePics: Record<string, string> = {
     "sistem.informasi.ithb": "/logo.png",
-    "iko15_avatar": "/logo.png", // Fallback to logo.png by default, or place a file named iko15_avatar.jpg in public/
     "hmsi.ithb": "/hmsi.ithb.jpg",    // Map to the uploaded hmsi.ithb.jpg file
   };
   
   return profilePics[username] || "/logo.png";
 };
 
+const getTruncatedCaption = (text: string) => {
+  const lines = text.split('\n');
+  if (lines.length > 15) {
+    const firstLines = lines.slice(0, 15).join('\n');
+    return firstLines.length > 800 ? firstLines.substring(0, 800) + '...' : firstLines + '...';
+  }
+  if (text.length > 800) {
+    return text.substring(0, 800) + '...';
+  }
+  return text;
+};
+
 export function SocialHubSection() {
   const [posts, setPosts] = useState<InstagramPost[]>(mockPosts);
   const [visibleCount, setVisibleCount] = useState(8);
+  const [expandedPosts, setExpandedPosts] = useState<Record<string, boolean>>({});
+  const [profileStats, setProfileStats] = useState({
+    followers: 1350,
+    posts: 184,
+    following: 92,
+  });
+
+  const activeUsername = posts[0]?.username || "hmsi.ithb";
+  const activeInstagramUrl = `https://www.instagram.com/${activeUsername}/`;
+  const isDifferentFromMain = activeUsername !== "sistem.informasi.ithb";
+
+  const formatStatValue = (value: number) => {
+    if (value >= 1000) {
+      return (value / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+    }
+    return value.toString();
+  };
 
   useEffect(() => {
     const fetchInstagramPosts = async () => {
@@ -102,6 +130,23 @@ export function SocialHubSection() {
       if (tokens.length === 0) return;
 
       try {
+        // Fetch profile stats (followers, posts, following) from the first token
+        try {
+          const statsResponse = await fetch(
+            `https://graph.instagram.com/me?fields=followers_count,media_count,follows_count&access_token=${tokens[0]}`
+          );
+          const statsData = await statsResponse.json();
+          if (statsData && statsData.followers_count !== undefined) {
+            setProfileStats({
+              followers: statsData.followers_count,
+              posts: statsData.media_count,
+              following: statsData.follows_count,
+            });
+          }
+        } catch (err) {
+          console.error("Failed to fetch Instagram profile stats:", err);
+        }
+
         const fetchPromises = tokens.map(async (token) => {
           try {
             const response = await fetch(
@@ -186,7 +231,7 @@ export function SocialHubSection() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-orange-500/10 border border-pink-500/20 text-pink-600 text-sm font-medium mb-4">
             <Instagram className="w-4 h-4 animate-pulse" />
-            @sistem.informasi.ithb
+            @{activeUsername}
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Life at <span className="gradient-text">SI ITHB</span>
@@ -196,30 +241,41 @@ export function SocialHubSection() {
           </p>
         </div>
 
-        {/* Follow CTA & Stats (Moved to Top) */}
         <div className="flex flex-col items-center mb-16 space-y-8">
-          <Button
-            variant="outline"
-            size="lg"
-            className="group border-2 border-foreground/30 rounded-full px-8 py-6 font-semibold inline-flex items-center gap-2 hover:bg-secondary hover:text-secondary-foreground transition-all duration-300"
-            onClick={() =>
-              window.open(
-                "https://www.instagram.com/sistem.informasi.ithb/",
-                "_blank",
-              )
-            }
-          >
-            <Instagram className="w-5 h-5 text-foreground group-hover:text-secondary-foreground" />
-            Follow @sistem.informasi.ithb
-            <ExternalLink className="w-4 h-4 text-foreground group-hover:text-secondary-foreground" />
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-2xl">
+            {/* Button 1: Active dynamic account */}
+            <Button
+              variant="outline"
+              size="lg"
+              className="group border-2 border-foreground/30 rounded-full px-8 py-6 font-semibold inline-flex items-center gap-2 hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 w-full sm:w-auto"
+              onClick={() => window.open(activeInstagramUrl, "_blank")}
+            >
+              <Instagram className="w-5 h-5 text-foreground group-hover:text-secondary-foreground" />
+              Follow @{activeUsername}
+              <ExternalLink className="w-4 h-4 text-foreground group-hover:text-secondary-foreground" />
+            </Button>
+
+            {/* Button 2: Also follow @sistem.informasi.ithb (only if active account is different) */}
+            {isDifferentFromMain && (
+              <Button
+                variant="outline"
+                size="lg"
+                className="group border-2 border-foreground/20 rounded-full px-8 py-6 font-semibold inline-flex items-center gap-2 hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-all duration-300 w-full sm:w-auto text-muted-foreground"
+                onClick={() => window.open("https://www.instagram.com/sistem.informasi.ithb/", "_blank")}
+              >
+                <Instagram className="w-5 h-5 text-muted-foreground group-hover:text-white" />
+                Follow juga @sistem.informasi.ithb
+                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-white" />
+              </Button>
+            )}
+          </div>
 
           {/* Stats Bar */}
           <div className="flex flex-wrap justify-center gap-8 md:gap-16 w-full max-w-xl border-t border-b border-border/50 py-6">
             {[
-              { value: "5.2K", label: "Followers" },
-              { value: "1.8K", label: "Posts" },
-              { value: "850", label: "Following" },
+              { value: formatStatValue(profileStats.followers), label: "Followers" },
+              { value: formatStatValue(profileStats.posts), label: "Posts" },
+              { value: formatStatValue(profileStats.following), label: "Following" },
             ].map((stat, index) => (
               <div key={index} className="text-center min-w-[80px]">
                 <div className="text-2xl md:text-3xl font-bold text-foreground font-space">
@@ -290,9 +346,21 @@ export function SocialHubSection() {
                   </div>
 
                   {/* Caption */}
-                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-5 whitespace-pre-line">
-                    {post.caption}
-                  </p>
+                  <div className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-5">
+                    <p className="whitespace-pre-line inline">
+                      {post.caption.length > 800 || post.caption.split('\n').length > 15
+                        ? (expandedPosts[post.id] ? post.caption : getTruncatedCaption(post.caption))
+                        : post.caption}
+                    </p>
+                    {(post.caption.length > 800 || post.caption.split('\n').length > 15) && (
+                      <button
+                        onClick={() => setExpandedPosts(prev => ({ ...prev, [post.id]: !prev[post.id] }))}
+                        className="text-pink-500 hover:text-pink-600 font-semibold text-xs ml-1.5 focus:outline-none inline-block align-baseline"
+                      >
+                        {expandedPosts[post.id] ? "Sembunyikan" : "Selengkapnya"}
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {/* Card Footer */}
