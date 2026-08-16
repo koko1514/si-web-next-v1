@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { GraduationCap, Briefcase, Globe, Cpu, Award, Users, BookOpen, Layers } from "lucide-react";
 
 const advantages = [
@@ -55,7 +58,13 @@ export function AdvantagesSection() {
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
           <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-medium mb-4">
             Keunggulan Kami
           </span>
@@ -65,14 +74,19 @@ export function AdvantagesSection() {
           <p className="text-dark-surface-foreground/70 text-base md:text-lg max-w-2xl mx-auto">
             Kami menawarkan pengalaman belajar terbaik dengan fasilitas modern dan kurikulum terupdate
           </p>
-        </div>
+        </motion.div>
 
         {/* Advantage Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {advantages.map((advantage, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group relative p-8 rounded-2xl bg-dark-surface/50 border border-white/10 backdrop-blur-sm hover:border-accent/50 transition-all duration-500 hover:-translate-y-2"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="group relative p-8 rounded-2xl bg-dark-surface/50 border border-white/10 backdrop-blur-sm hover:border-accent/50 transition-colors duration-300 cursor-default"
             >
               {/* Glow Effect on Hover */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
@@ -105,28 +119,35 @@ export function AdvantagesSection() {
               {/* Corner Decoration */}
               <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/10 rounded-tr-xl group-hover:border-accent/40 transition-colors" />
               <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/10 rounded-bl-xl group-hover:border-accent/40 transition-colors" />
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Additional Stats Row */}
-        <div className="mt-16 grid grid-cols-2 gap-6 max-w-xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="mt-16 grid grid-cols-2 gap-6 max-w-xl mx-auto"
+        >
           {[
             { icon: Award, value: "B", label: "Akreditasi BAN-PT" },
             { icon: Briefcase, value: "90%+", label: "Employment Rate" },
           ].map((stat, index) => (
-            <div
+            <motion.div
               key={index}
-              className="text-center p-6 rounded-xl bg-white/5 border border-white/10"
+              whileHover={{ scale: 1.05 }}
+              className="text-center p-6 rounded-xl bg-white/5 border border-white/10 transition-colors hover:border-accent/30"
             >
               <stat.icon className="w-6 h-6 text-accent mx-auto mb-2" />
               <div className="text-2xl md:text-3xl font-bold text-dark-surface-foreground font-space">
                 {stat.value}
               </div>
               <div className="text-sm text-dark-surface-foreground/60">{stat.label}</div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

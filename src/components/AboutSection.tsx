@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Award, Briefcase, Globe, Compass, Lightbulb } from "lucide-react";
 
 export function AboutSection() {
@@ -16,7 +19,13 @@ export function AboutSection() {
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
           <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
             Tentang Kami
           </span>
@@ -26,11 +35,17 @@ export function AboutSection() {
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
             Mencetak profesional muda yang mampu berinovasi di era digital
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
           {/* Left Column: Visi */}
-          <div className="space-y-8 flex flex-col justify-between">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-8 flex flex-col justify-between"
+          >
             <div className="space-y-6">
               <div className="inline-block px-3 py-1 rounded-md bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider">
                 Visi
@@ -51,9 +66,14 @@ export function AboutSection() {
                 { icon: Globe, title: "Karier Global", desc: "Lulusan dipersiapkan bersaing secara internasional" },
                 { icon: Compass, title: "Project-Based Learning", desc: "Pembelajaran berbasis penyelesaian masalah nyata" },
               ].map((item, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className="flex items-start gap-3 p-3.5 rounded-xl bg-background/50 border border-border/50 hover:border-secondary/30 transition-colors group"
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -3 }}
+                  className="flex items-start gap-3 p-3.5 rounded-xl bg-background/50 border border-border/50 hover:border-secondary/30 transition-colors group cursor-default"
                 >
                   <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0 group-hover:bg-secondary/20 transition-colors">
                     <item.icon className="w-4 h-4 text-secondary" />
@@ -62,13 +82,19 @@ export function AboutSection() {
                     <h4 className="font-semibold text-foreground text-xs sm:text-sm">{item.title}</h4>
                     <p className="text-muted-foreground text-[11px] sm:text-xs">{item.desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Misi */}
-          <div className="space-y-8 flex flex-col justify-between">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-8 flex flex-col justify-between"
+          >
             <div className="space-y-6">
               <div className="inline-block px-3 py-1 rounded-md bg-secondary/10 text-secondary text-xs font-semibold uppercase tracking-wider">
                 Misi
@@ -100,7 +126,15 @@ export function AboutSection() {
                     text: "Menghasilkan lulusan Sistem Informasi yang berkarakter unggul dan berintegritas."
                   }
                 ].map((misi, idx) => (
-                  <div key={idx} className="flex gap-4 p-4 rounded-xl bg-background/30 border border-border/40 hover:bg-background/60 hover:border-secondary/20 transition-all duration-300">
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.12 }}
+                    whileHover={{ x: 4 }}
+                    className="flex gap-4 p-4 rounded-xl bg-background/30 border border-border/40 hover:bg-background/60 hover:border-secondary/20 transition-all duration-300 cursor-default"
+                  >
                     <div className="text-xl font-bold font-space text-secondary opacity-80 shrink-0">
                       {misi.num}
                     </div>
@@ -108,11 +142,11 @@ export function AboutSection() {
                       <h4 className="font-bold text-foreground text-sm sm:text-base">{misi.title}</h4>
                       <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">{misi.text}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

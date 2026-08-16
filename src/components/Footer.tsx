@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram, Linkedin, Youtube, ArrowUp } from "lucide-react";
 
@@ -32,9 +33,27 @@ const socialLinks = [
 ];
 
 export function Footer() {
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroElement = document.getElementById("hero");
+      if (heroElement) {
+        const heroBottom = heroElement.getBoundingClientRect().bottom;
+        setShowBackToTop(heroBottom <= 100);
+      } else {
+        setShowBackToTop(window.scrollY > 400);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <footer
@@ -172,10 +191,14 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Back to Top Button */}
+      {/* Back to Top Button (Smooth entrance & exit animation) */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-8 right-8 w-12 h-12 rounded-xl bg-secondary text-secondary-foreground shadow-lg hover:shadow-[0_0_30px_hsl(210_100%_50%_/_0.4)] transition-all duration-300 flex items-center justify-center z-50 hover:-translate-y-1"
+        className={`fixed bottom-8 right-8 w-12 h-12 rounded-xl bg-primary text-primary-foreground shadow-lg hover:shadow-xl flex items-center justify-center z-50 cursor-pointer transition-all duration-500 transform ${
+          showBackToTop
+            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto hover:-translate-y-1"
+            : "opacity-0 translate-y-8 scale-75 pointer-events-none"
+        }`}
         aria-label="Back to top"
       >
         <ArrowUp className="w-5 h-5" />

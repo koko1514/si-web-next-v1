@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
+import { CampusTourSection } from "@/components/CampusTourSection";
 import { AdvantagesSection } from "@/components/AdvantagesSection";
 import { AchievementsSection } from "@/components/AchievementsSection";
 import { AccreditationSection } from "@/components/AccreditationSection";
@@ -16,6 +17,7 @@ export default function Home() {
       <main>
         <HeroSection />
         <AboutSection />
+        <CampusTourSection />
         <CareerSection />
         <AdvantagesSection />
         <AchievementsSection />

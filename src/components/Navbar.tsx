@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
@@ -77,18 +78,23 @@ export function Navbar() {
           const sections = ["hero", "about", "career", "advantages", "lecturers"];
           const threshold = window.innerHeight / 3; // dynamic viewport detection line
           
-          let currentSection = "/#hero";
-          for (const section of sections) {
-            const element = document.getElementById(section);
-            if (element) {
-              const rect = element.getBoundingClientRect();
-              if (rect.top <= threshold && rect.bottom >= threshold) {
-                currentSection = `/#${section}`;
-                break;
+          let foundSection: string | null = null;
+          if (currentScrollY < 100) {
+            foundSection = "/#hero";
+          } else {
+            for (const section of sections) {
+              const element = document.getElementById(section);
+              if (element) {
+                const rect = element.getBoundingClientRect();
+                if (rect.top <= threshold && rect.bottom >= 0) {
+                  foundSection = `/#${section}`;
+                }
               }
             }
           }
-          setActiveLink(currentSection);
+          if (foundSection) {
+            setActiveLink(foundSection);
+          }
         }
       } else {
         setActiveLink(pathname);
@@ -103,7 +109,9 @@ export function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "glass shadow-lg py-3" : "bg-transparent py-5"
+        isScrolled
+          ? "bg-white/90 backdrop-blur-md shadow-sm py-3"
+          : "bg-transparent py-5"
       } ${
         isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
       }`}
@@ -141,14 +149,16 @@ export function Navbar() {
                         ? "text-white font-bold"
                         : "text-primary font-bold"
                       : isDarkBg
-                      ? "text-white/70 hover:text-white"
-                      : "text-muted-foreground hover:text-primary"
+                        ? "text-white/70 hover:text-white"
+                        : "text-muted-foreground hover:text-primary"
                   }`}
                 >
                   {link.name}
                   {isActive && (
-                    <span
-                      className={`absolute bottom-0 left-4 right-4 h-0.5 rounded-full animate-fade-in ${
+                    <motion.span
+                      layoutId="activeNavbarUnderline"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      className={`absolute bottom-0 left-4 right-4 h-0.5 rounded-full ${
                         isDarkBg ? "bg-white" : "bg-primary"
                       }`}
                     />
@@ -161,16 +171,15 @@ export function Navbar() {
           {/* CTA Button */}
           <div className="hidden lg:block">
             <Button
-              variant={isDarkBg ? "outline" : "hero"}
               size="sm"
-              className={
+              className={`font-semibold shadow-sm transition-all duration-300 border border-transparent ${
                 isDarkBg
-                  ? "border-white bg-white text-[#1E3A8A] hover:bg-white/90 hover:text-[#1E3A8A] rounded-none font-semibold shadow-md"
-                  : ""
-              }
+                  ? "bg-white text-[#1E3A8A] hover:bg-white/90"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90"
+              }`}
               asChild
             >
-              <Link href="/metaverse">Our Metaverse</Link>
+              <Link href="/metaverse">Galeri Metaverse</Link>
             </Button>
           </div>
 
@@ -182,9 +191,13 @@ export function Navbar() {
             }`}
           >
             {isMobileMenuOpen ? (
-              <X className={`w-6 h-6 ${isDarkBg ? "text-white" : "text-foreground"}`} />
+              <X
+                className={`w-6 h-6 ${isDarkBg ? "text-white" : "text-foreground"}`}
+              />
             ) : (
-              <Menu className={`w-6 h-6 ${isDarkBg ? "text-white" : "text-foreground"}`} />
+              <Menu
+                className={`w-6 h-6 ${isDarkBg ? "text-white" : "text-foreground"}`}
+              />
             )}
           </button>
         </nav>
@@ -212,8 +225,11 @@ export function Navbar() {
                   );
                 })}
                 <Button variant="hero" className="mt-2" asChild>
-                  <Link href="/metaverse" onClick={() => setIsMobileMenuOpen(false)}>
-                    Virtual Tour
+                  <Link
+                    href="/metaverse"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Galeri Metaverse
                   </Link>
                 </Button>
               </div>

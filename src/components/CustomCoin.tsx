@@ -37,6 +37,8 @@ function CoinMesh() {
   useFrame((state, delta) => {
     if (coinRef.current) {
       coinRef.current.rotation.z += delta * 1.0;
+      // Floating animation directly in 3D WebGL (continuous and seamless across scrolling)
+      coinRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.15;
     }
   });
 
@@ -75,7 +77,7 @@ function CoinMesh() {
 export default function CustomCoin() {
   return (
     <div className="w-full h-full">
-      <Canvas camera={{ position: [0, 0, 7.0], fov: 50 }}>
+      <Canvas camera={{ position: [0, 0, 6.5], fov: 50 }}>
         {/* Pencahayaan dramatis */}
         <ambientLight intensity={1.5} />
         <directionalLight position={[10, 10, 10]} intensity={2.5} />

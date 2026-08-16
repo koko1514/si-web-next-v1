@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Briefcase, Globe, TrendingUp, CheckCircle2, UserCheck, Terminal, Compass, Layers } from "lucide-react";
 
 const careerRoles = [
@@ -44,7 +47,13 @@ export function CareerSection() {
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
           <span className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-4">
             Masa Depan & Karier
           </span>
@@ -54,10 +63,16 @@ export function CareerSection() {
           <p className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
             Digitalisasi bisnis mendorong seluruh jenis perusahaan beroperasi secara online dan menciptakan kebutuhan yang tinggi terhadap pemakaian sistem informasi dalam organisasi. Implementasi sistem informasi dalam organisasi adalah sebuah proses yang kompleks yang merupakan kompetensi utama lulusan Sistem Informasi.
           </p>
-        </div>
+        </motion.div>
 
         {/* Global Opportunity Highlight */}
-        <div className="max-w-4xl mx-auto mb-16 p-6 md:p-8 rounded-3xl bg-gradient-to-r from-secondary/10 via-accent/5 to-secondary/5 border border-secondary/20 shadow-lg relative overflow-hidden group">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-4xl mx-auto mb-16 p-6 md:p-8 rounded-3xl bg-gradient-to-r from-secondary/10 via-accent/5 to-secondary/5 border border-secondary/20 shadow-lg relative overflow-hidden group"
+        >
           <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-2xl pointer-events-none" />
           <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
             <div className="w-16 h-16 rounded-2xl bg-secondary/20 flex items-center justify-center shrink-0">
@@ -72,14 +87,19 @@ export function CareerSection() {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Career Roles Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {careerRoles.map((item, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group relative p-6 rounded-2xl bg-card border border-border hover:border-secondary/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -6 }}
+              className="group relative p-6 rounded-2xl bg-card border border-border hover:border-secondary/50 hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-default"
             >
               <div>
                 {/* Icon */}
@@ -101,7 +121,7 @@ export function CareerSection() {
                 <span>Siap Kerja</span>
                 <CheckCircle2 className="w-3.5 h-3.5" />
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

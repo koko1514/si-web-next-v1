@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { Mail, Linkedin, GraduationCap, Award } from "lucide-react";
 
@@ -58,32 +61,40 @@ const lecturers = [
     name: "Yosi Yonata, S.T., M.T.",
     role: "Dosen Bidang Teknologi Web & Humaniora",
     expertise: [
-      "Pemrograman & Proyek Web",
-      "Knowledge Management",
-      "Isu Sosial & Profesional SI",
-      "Bahasa Indonesia",
+      "Teknologi Web & Internet",
+      "Desain & Pengembangan SI",
+      "Etika Profesi & Humaniora",
+      "Literasi Digital",
     ],
-    image: "/placeholder.svg",
+    image: "/yosi.png",
+    linkedin: "https://www.linkedin.com/in/yosi-yonata-59828551/",
+    email: "yosi@ithb.ac.id",
   },
 ];
 
 export function LecturersSection() {
   return (
-    <section id="lecturers" className="section-padding bg-muted/20 relative overflow-hidden">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.01]">
+    <section id="lecturers" className="section-padding bg-card relative overflow-hidden">
+      {/* Subtle Pattern */}
+      <div className="absolute inset-0 opacity-[0.02]">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)`,
-            backgroundSize: "32px 32px",
+            backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--primary)) 1px, transparent 0)`,
+            backgroundSize: "36px 36px",
           }}
         />
       </div>
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
           <span className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-4">
             Staf Pengajar
           </span>
@@ -93,14 +104,19 @@ export function LecturersSection() {
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
             Dosen Sistem Informasi ITHB merupakan akademisi dan praktisi profesional lulusan perguruan tinggi terkemuka.
           </p>
-        </div>
+        </motion.div>
 
         {/* Lecturers Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {lecturers.map((lecturer, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group relative rounded-2xl bg-card border border-border/60 overflow-hidden shadow-md hover:shadow-2xl hover:border-secondary/30 transition-all duration-300 flex flex-col"
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -6 }}
+              className="group relative rounded-2xl bg-card border border-border/60 overflow-hidden shadow-md hover:shadow-2xl hover:border-secondary/30 transition-colors duration-300 flex flex-col cursor-default"
             >
               {/* Photo Frame */}
               <div className="aspect-[4/5] relative overflow-hidden bg-muted">
@@ -172,7 +188,7 @@ export function LecturersSection() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

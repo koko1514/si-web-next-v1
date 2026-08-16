@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { Instagram, Play, Layers, Share2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -289,10 +290,15 @@ export function SocialHubSection() {
 
         {/* Masonry Layout Columns */}
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
-          {posts.slice(0, visibleCount).map((post) => (
-            <div
+          {posts.slice(0, visibleCount).map((post, idx) => (
+            <motion.div
               key={post.id}
-              className="break-inside-avoid bg-card border border-border/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-pink-500/20 transition-all duration-300 flex flex-col mb-6"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: (idx % 6) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -6 }}
+              className="break-inside-avoid bg-card border border-border/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-pink-500/20 transition-colors duration-300 flex flex-col mb-6 cursor-default"
             >
               {/* Media Container */}
               <a
@@ -399,7 +405,7 @@ export function SocialHubSection() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
