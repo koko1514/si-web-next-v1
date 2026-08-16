@@ -26,11 +26,17 @@ export function AboutSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-            Tentang Kami
-          </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Visi & <span className="gradient-text">Misi</span>
+            <span className="text-primary">Visi</span>{" "}
+            <span
+              className="inline-block bg-clip-text text-transparent px-0.5"
+              style={{
+                backgroundImage: `linear-gradient(90deg, hsl(var(--primary)) 50%, hsl(var(--accent)) 50%)`,
+              }}
+            >
+              &
+            </span>{" "}
+            <span className="text-accent">Misi</span>
           </h2>
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
             Mencetak profesional muda yang mampu berinovasi di era digital
@@ -53,7 +59,7 @@ export function AboutSection() {
               <h3 className="text-2xl sm:text-3xl font-bold text-foreground font-space leading-tight">
                 Menjadi Program Studi Unggulan
               </h3>
-              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed italic bg-muted/30 p-6 rounded-2xl border-l-4 border-secondary">
+              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed italic bg-muted/30 p-6 rounded-2xl border-l-4 border-primary">
                 &quot;Menjadi program studi unggulan di bidang pengembangan dan pemanfaatan Enterprise System dan menghasilkan lulusan Sistem Informasi yang kompeten dalam skala global, berkarakter unggul, dan berintegritas untuk memberi dampak positif pada bidang keilmuan dan pemanfaatan Sistem Informasi.&quot;
               </p>
             </div>
@@ -73,10 +79,10 @@ export function AboutSection() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ y: -3 }}
-                  className="flex items-start gap-3 p-3.5 rounded-xl bg-background/50 border border-border/50 hover:border-secondary/30 transition-colors group cursor-default"
+                  className="flex items-start gap-3 p-3.5 rounded-xl bg-background/50 border border-border/50 hover:border-primary/30 transition-colors group cursor-default"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0 group-hover:bg-secondary/20 transition-colors">
-                    <item.icon className="w-4 h-4 text-secondary" />
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                    <item.icon className="w-4 h-4 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground text-xs sm:text-sm">{item.title}</h4>
@@ -96,7 +102,7 @@ export function AboutSection() {
             className="space-y-8 flex flex-col justify-between"
           >
             <div className="space-y-6">
-              <div className="inline-block px-3 py-1 rounded-md bg-secondary/10 text-secondary text-xs font-semibold uppercase tracking-wider">
+              <div className="inline-block px-3 py-1 rounded-md bg-accent/10 text-accent text-xs font-semibold uppercase tracking-wider">
                 Misi
               </div>
               <h3 className="text-2xl sm:text-3xl font-bold text-foreground font-space leading-tight">

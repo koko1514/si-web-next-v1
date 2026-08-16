@@ -41,16 +41,14 @@ export function AdvantagesSection() {
     >
       {/* Background Image Overlay */}
       <div
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0 opacity-40 bg-cover bg-center"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=2000&q=80')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundImage: `url('/bgithb.jpg')`,
         }}
       />
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark-surface/95 via-dark-surface/90 to-dark-surface/95" />
+      <div className="absolute inset-0 bg-gradient-to-b from-dark-surface/45 via-dark-surface/60 to-dark-surface/75" />
 
       {/* Decorative Elements */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
@@ -65,9 +63,6 @@ export function AdvantagesSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-medium mb-4">
-            Keunggulan Kami
-          </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-surface-foreground mb-4">
             Mengapa Memilih <span className="text-accent">SI ITHB?</span>
           </h2>
@@ -101,7 +96,7 @@ export function AdvantagesSection() {
                 </div>
 
                 {/* Highlight Badge */}
-                <span className="inline-block px-3 py-1 rounded-full bg-secondary/20 text-secondary text-xs font-semibold mb-4">
+                <span className="inline-block px-3.5 py-1 rounded-full bg-accent/15 text-amber-300 border border-accent/30 text-xs font-semibold mb-4 backdrop-blur-sm shadow-sm">
                   {advantage.highlight}
                 </span>
 
@@ -132,7 +127,7 @@ export function AdvantagesSection() {
           className="mt-16 grid grid-cols-2 gap-6 max-w-xl mx-auto"
         >
           {[
-            { icon: Award, value: "B", label: "Akreditasi BAN-PT" },
+            { icon: Award, value: "UNGGUL", label: "Akreditasi LAM INFOKOM" },
             { icon: Briefcase, value: "90%+", label: "Employment Rate" },
           ].map((stat, index) => (
             <motion.div

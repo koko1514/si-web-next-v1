@@ -1,8 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Mail, Linkedin, GraduationCap, Award } from "lucide-react";
+
+function LecturerImage({ src, alt }: { src: string; alt: string }) {
+  const [imgSrc, setImgSrc] = useState(src);
+
+  return (
+    <Image
+      src={imgSrc}
+      alt={alt}
+      fill
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+      className="object-cover group-hover:scale-105 transition-transform duration-500"
+      onError={() => setImgSrc("/placeholder.svg")}
+    />
+  );
+}
 
 const lecturers = [
   {
@@ -22,7 +38,7 @@ const lecturers = [
     name: "Herastia Maharani, S.T., M.T.",
     role: "Dosen Bidang Basis Data & HCI",
     expertise: [
-      "Sistem Basis Data & HCI",
+      "Sistem Basis Data",
       "UI/UX Design & Data Mining",
       "E-Commerce & Applied IT/IS",
       "Manajemen Data & Informasi",
@@ -62,13 +78,11 @@ const lecturers = [
     role: "Dosen Bidang Teknologi Web & Humaniora",
     expertise: [
       "Teknologi Web & Internet",
-      "Desain & Pengembangan SI",
+      "Pengembangan Aplikasi Web",
       "Etika Profesi & Humaniora",
       "Literasi Digital",
     ],
-    image: "/yosi.png",
-    linkedin: "https://www.linkedin.com/in/yosi-yonata-59828551/",
-    email: "yosi@ithb.ac.id",
+    image: "/placeholder.svg",
   },
 ];
 
@@ -95,9 +109,6 @@ export function LecturersSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-4">
-            Staf Pengajar
-          </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Tim <span className="gradient-text">Dosen Terbaik</span>
           </h2>
@@ -120,13 +131,7 @@ export function LecturersSection() {
             >
               {/* Photo Frame */}
               <div className="aspect-[4/5] relative overflow-hidden bg-muted">
-                <Image
-                  src={lecturer.image}
-                  alt={lecturer.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                <LecturerImage src={lecturer.image} alt={lecturer.name} />
                 {(lecturer.email || lecturer.linkedin) && (
                   <div className="absolute inset-0 bg-gradient-to-t from-dark-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
                     {/* Social Icons inside photo on hover */}

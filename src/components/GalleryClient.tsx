@@ -23,7 +23,7 @@ export function GalleryClient() {
   });
 
   return (
-    <section className="section-padding bg-background relative min-h-[80vh] overflow-hidden">
+    <section className="pt-4 pb-16 sm:pb-20 md:pb-24 bg-background relative min-h-[80vh] overflow-hidden">
       {/* Background Decoration */}
       <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-secondary/5 to-transparent" />
       <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-accent/5 to-transparent" />
@@ -38,11 +38,11 @@ export function GalleryClient() {
         >
           <Link href="/">
             <Button
-              variant="ghost"
-              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group cursor-pointer"
+              variant="outline"
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-card/90 border border-border/80 shadow-sm hover:shadow-md hover:border-primary/40 hover:bg-primary/10 hover:text-primary text-foreground font-semibold text-xs sm:text-sm transition-all duration-300 group cursor-pointer"
             >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Kembali ke Beranda
+              <ArrowLeft className="w-4 h-4 text-primary group-hover:-translate-x-1 transition-transform duration-300" />
+              <span>Kembali ke Beranda</span>
             </Button>
           </Link>
         </motion.div>
@@ -54,9 +54,6 @@ export function GalleryClient() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-12"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
-            Galeri Dokumentasi
-          </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
             Aktivitas <span className="gradient-text">& Event Kami</span>
           </h1>
@@ -108,7 +105,7 @@ export function GalleryClient() {
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -6 }}
-                key={item.title || idx}
+                key={`${item.title}-${idx}`}
                 onClick={() => {
                   setSelectedImage(item.image);
                   setSelectedTitle(item.title);

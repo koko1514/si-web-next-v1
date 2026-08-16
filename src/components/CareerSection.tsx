@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Briefcase, Globe, TrendingUp, CheckCircle2, UserCheck, Terminal, Compass, Layers } from "lucide-react";
 
@@ -85,6 +86,17 @@ export function CareerSection() {
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
                 Sertifikasi bidang Enterprise Resource Planning (ERP) dari SAP membuka peluang karier global di perusahaan multinasional dalam proyek implementasi sistem terintegrasi skala besar.
               </p>
+            </div>
+            <div className="shrink-0">
+              <div className="h-24 px-5 bg-white flex items-center justify-center rounded-xl shadow-sm border border-slate-100">
+                <Image
+                  src="/SAP_2011_logo.svg"
+                  alt="SAP ERP Logo"
+                  width={120}
+                  height={60}
+                  className="h-16 w-auto object-contain"
+                />
+              </div>
             </div>
           </div>
         </motion.div>

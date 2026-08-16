@@ -105,9 +105,9 @@ export function SocialHubSection() {
   const [visibleCount, setVisibleCount] = useState(8);
   const [expandedPosts, setExpandedPosts] = useState<Record<string, boolean>>({});
   const [profileStats, setProfileStats] = useState({
-    followers: 1350,
-    posts: 184,
-    following: 92,
+    followers: 573,
+    posts: 570,
+    following: 307,
   });
 
   const activeUsername = posts[0]?.username || "hmsi.ithb";
@@ -123,87 +123,18 @@ export function SocialHubSection() {
 
   useEffect(() => {
     const fetchInstagramPosts = async () => {
-      const tokens = [
-        process.env.NEXT_PUBLIC_INSTAGRAM_TOKEN,
-        process.env.NEXT_PUBLIC_INSTAGRAM_TOKEN_2
-      ].filter(Boolean) as string[];
-
-      if (tokens.length === 0) return;
-
       try {
-        // Fetch profile stats (followers, posts, following) from the first token
-        try {
-          const statsResponse = await fetch(
-            `https://graph.instagram.com/me?fields=followers_count,media_count,follows_count&access_token=${tokens[0]}`
-          );
-          const statsData = await statsResponse.json();
-          if (statsData && statsData.followers_count !== undefined) {
-            setProfileStats({
-              followers: statsData.followers_count,
-              posts: statsData.media_count,
-              following: statsData.follows_count,
-            });
+        const response = await fetch("/api/instagram");
+        const resData = await response.json();
+
+        if (resData.success && resData.posts && resData.posts.length > 0) {
+          if (resData.profileStats) {
+            setProfileStats(resData.profileStats);
           }
-        } catch (err) {
-          console.error("Failed to fetch Instagram profile stats:", err);
-        }
-
-        const fetchPromises = tokens.map(async (token) => {
-          try {
-            const response = await fetch(
-              `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username&access_token=${token}`
-            );
-            const data = (await response.json()) as InstagramApiResponse;
-            return data.data || [];
-          } catch (err) {
-            console.error("Error fetching for token:", err);
-            return [];
-          }
-        });
-
-        const results = await Promise.all(fetchPromises);
-        const combinedRawPosts = results.flat();
-
-        if (combinedRawPosts.length > 0) {
-          const formattedPosts = combinedRawPosts.map((item: RawInstagramPost) => {
-            const date = new Date(item.timestamp);
-            const timeDiff = Math.abs(new Date().getTime() - date.getTime());
-            const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-            let displayTime = item.timestamp;
-            if (diffDays < 7) {
-              displayTime = `${diffDays} DAYS AGO`;
-            } else if (diffDays < 30) {
-              displayTime = `${Math.floor(diffDays / 7)} WEEKS AGO`;
-            } else {
-              displayTime = date.toLocaleDateString("id-ID", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              }).toUpperCase();
-            }
-            return {
-              id: item.id,
-              media_url: item.media_type === "VIDEO" ? (item.thumbnail_url || item.media_url) : item.media_url,
-              media_type: item.media_type,
-              caption: item.caption || "",
-              timestamp: displayTime,
-              rawTimestamp: item.timestamp,
-              permalink: item.permalink || "https://www.instagram.com/sistem.informasi.ithb/",
-              username: item.username || "sistem.informasi.ithb",
-            };
-          });
-
-          // Sort combined posts by rawTimestamp (latest first)
-          formattedPosts.sort((a, b) => {
-            const timeA = a.rawTimestamp ? new Date(a.rawTimestamp).getTime() : 0;
-            const timeB = b.rawTimestamp ? new Date(b.rawTimestamp).getTime() : 0;
-            return timeB - timeA;
-          });
-
-          setPosts(formattedPosts);
+          setPosts(resData.posts);
         }
       } catch (error) {
-        console.error("Failed to fetch Instagram posts:", error);
+        console.error("Failed to fetch Instagram posts from API route:", error);
       }
     };
 
@@ -230,10 +161,6 @@ export function SocialHubSection() {
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-orange-500/10 border border-pink-500/20 text-pink-600 text-sm font-medium mb-4">
-            <Instagram className="w-4 h-4 animate-pulse" />
-            @{activeUsername}
-          </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Life at <span className="gradient-text">SI ITHB</span>
           </h2>

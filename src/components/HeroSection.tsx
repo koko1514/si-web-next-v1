@@ -49,13 +49,26 @@ export function HeroSection() {
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center lg:text-left space-y-6 md:space-y-8 w-full lg:w-[45%] max-w-xl mx-auto lg:mx-0 shrink-0"
+            className="w-full lg:w-[48%] flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 md:space-y-8"
           >
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="inline-block tracking-widest text-[11px] sm:text-xs md:text-sm font-semibold uppercase text-accent"
+            >
+              Program Studi Sarjana
+            </motion.div>
+
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-bold font-lora text-white leading-tight"
+              transition={{
+                duration: 0.8,
+                delay: 0.15,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="font-lora text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold tracking-tight text-white leading-[1.1]"
             >
               Sistem Informasi
               <br />
@@ -65,7 +78,11 @@ export function HeroSection() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.8,
+                delay: 0.25,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="text-base sm:text-lg md:text-xl text-slate-200/90 leading-relaxed font-inter"
             >
               Mendidik pemimpin masa depan yang berstandar global, berkarakter
@@ -77,7 +94,11 @@ export function HeroSection() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.8,
+                delay: 0.4,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="flex justify-center lg:justify-start items-center"
             >
               <a
@@ -115,8 +136,15 @@ export function HeroSection() {
             <div className="relative w-[85vw] h-[85vw] max-w-[380px] max-h-[380px] sm:w-[440px] sm:h-[440px] md:w-[480px] md:h-[480px] lg:w-[520px] lg:h-[520px] xl:w-[600px] xl:h-[600px] 2xl:w-[660px] 2xl:h-[660px]">
               {/* Dynamic Ground Drop Shadow (positioned outside wrapper, synced with 3D float) */}
               <motion.div
-                animate={{ scale: [0.9, 1.08, 0.9], opacity: [0.25, 0.45, 0.25] }}
-                transition={{ repeat: Infinity, duration: 4.188, ease: "easeInOut" }}
+                animate={{
+                  scale: [0.9, 1.08, 0.9],
+                  opacity: [0.25, 0.45, 0.25],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 4.188,
+                  ease: "easeInOut",
+                }}
                 className="absolute -bottom-10 sm:-bottom-12 left-1/2 -translate-x-1/2 w-[70%] h-[30px] rounded-[100%] bg-black/60 blur-2xl pointer-events-none z-0"
               />
 
@@ -138,7 +166,9 @@ export function HeroSection() {
         transition={{ delay: 1, duration: 0.8 }}
         className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer group z-30"
         onClick={() => {
-          document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+          document
+            .getElementById("about")
+            ?.scrollIntoView({ behavior: "smooth" });
         }}
       >
         <span className="text-[10px] sm:text-xs text-slate-300/70 group-hover:text-white transition-colors tracking-widest uppercase font-medium">

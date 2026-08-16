@@ -6,7 +6,7 @@ import { Award, CheckCircle2, Star, X, ZoomIn } from "lucide-react";
 
 export function AccreditationSection() {
   const [isOpen, setIsOpen] = useState(false);
-  const certImageSrc = "/Akreditasi Sistem Informasi 27 Agustus 2021 - 27 Agustus 2026 copy.jpg";
+  const certImageSrc = "/Sertifikat Akreditasi Prodi SI ITHB - 2026.jpg";
 
   return (
     <section className="section-padding bg-card relative overflow-hidden">
@@ -46,7 +46,7 @@ export function AccreditationSection() {
           >
             <Image
               src={certImageSrc}
-              alt="Sertifikat Akreditasi BAN-PT Sistem Informasi ITHB"
+              alt="Sertifikat Akreditasi LAM INFOKOM UNGGUL Sistem Informasi ITHB"
               width={1200}
               height={850}
               className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-500"
@@ -61,14 +61,19 @@ export function AccreditationSection() {
           </div>
         </div>
 
-        {/* Centered Subtext (Exactly like user's image) */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed">
-            Program Studi Sistem Informasi telah terakreditasi sesuai
-            <br />
-            <span className="text-foreground font-bold font-space block mt-2 text-base sm:text-lg md:text-xl">
-              SK BAN-PT No. 10561/SK/BAN-PT/Ak-PPJ/S/VIII/2021
-            </span>
+        {/* Centered Subtext */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-2">
+          <p className="text-muted-foreground text-sm sm:text-base md:text-lg">
+            Program Studi Sistem Informasi pada Program Sarjana ITHB Memenuhi Syarat Peringkat
+          </p>
+          <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-extrabold text-lg sm:text-xl md:text-2xl tracking-wider my-2">
+            AKREDITASI UNGGUL
+          </div>
+          <p className="text-foreground font-bold font-space text-base sm:text-lg md:text-xl">
+            Keputusan LAM INFOKOM No. 105/SK/LAM-INFOKOM/Ak/S/VIII/2026
+          </p>
+          <p className="text-muted-foreground text-xs sm:text-sm">
+            Masa Berlaku: 7 Agustus 2026 s.d. 7 Agustus 2029
           </p>
         </div>
 
@@ -90,7 +95,7 @@ export function AccreditationSection() {
                 name: "Oracle Academy",
                 fullName: "Institutional Member",
                 grade: "Certified",
-                description: "Sertifikasi Database & Java Programming",
+                description: "Sertifikasi Database Design & SQL Programming",
                 logo: "/oracle-seeklogo.png",
                 logoClassName: "scale-150",
               },
@@ -157,7 +162,7 @@ export function AccreditationSection() {
           >
             <Image
               src={certImageSrc}
-              alt="Sertifikat Akreditasi BAN-PT Sistem Informasi ITHB (Fullscreen)"
+              alt="Sertifikat Akreditasi LAM INFOKOM UNGGUL Sistem Informasi ITHB (Fullscreen)"
               width={1600}
               height={1100}
               className="w-full h-auto max-h-[85vh] object-contain mx-auto"
