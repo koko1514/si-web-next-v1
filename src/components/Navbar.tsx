@@ -35,7 +35,9 @@ export function Navbar() {
   const [isNavigating, setIsNavigating] = useState(false);
   const [activeLink, setActiveLink] = useState("/#hero");
 
-  const isDarkBg = (!isScrolled && pathname === "/") || (mounted && theme === "dark");
+  const isDarkBg =
+    (!isScrolled && (pathname === "/" || pathname === "/metaverse")) ||
+    (mounted && theme === "dark");
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setIsMobileMenuOpen(false);
@@ -118,7 +120,7 @@ export function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-background/90 backdrop-blur-md shadow-sm border-b border-border/40 py-3"
+          ? "bg-background/90 backdrop-blur-md shadow-sm py-3"
           : "bg-transparent py-5"
       } ${
         isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
@@ -191,7 +193,7 @@ export function Navbar() {
                 {theme === "dark" ? (
                   <Sun className="w-4 h-4 text-amber-400" />
                 ) : (
-                  <Moon className="w-4 h-4 text-slate-700" />
+                  <Moon className={`w-4 h-4 ${isDarkBg ? "text-white" : "text-slate-700"}`} />
                 )}
               </button>
             )}
