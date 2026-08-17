@@ -53,7 +53,7 @@
   :root {
     --primary: 221.2 83.2% 33.3%; /* HSL for #1E3A8A */
     --primary-foreground: 210 40% 98%;
-    --secondary: 221.2 83.2% 33.3%; /* Map secondary to primary to avoid neon blue */
+    --secondary: 221.2 83.2% 33.3%;
     --secondary-foreground: 210 40% 98%;
     --accent: 37.7 90.2% 49.8%; /* HSL for #F59E0B (Amber) */
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -64,10 +64,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%; /* HSL for #64748B */
-    --dark-surface: 221.2 83.2% 15%; /* Dark Blue */
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --dark-surface: 221.2 83.2% 15%;
     --dark-surface-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%; /* HSL for #E2E8F0 */
+    --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 33.3%;
     --destructive: 0 84.2% 60.2%;
@@ -108,6 +108,41 @@
     --muted-foreground: 215.4 16.3% 70%;
     --border: 222.2 47.4% 25%;
     --input: 222.2 47.4% 25%;
+    
+    /* Tambahan untuk Dark Mode (Warna yang disesuaikan agar lebih terang/kontras di background gelap) */
+    --primary: 217.2 91.2% 59.8%; /* Biru yang lebih terang untuk visibilitas */
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 91.2% 59.8%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent: 37.7 90.2% 55%; /* Amber yang sedikit lebih terang */
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --dark-surface: 222.2 47.4% 8%;
+    --dark-surface-foreground: 210 40% 98%;
+    --ring: 217.2 91.2% 59.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Penyesuaian Gradient untuk Dark Mode */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(217.2 91.2% 59.8%),
+      hsl(217.2 91.2% 45%)
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      hsl(37.7 90.2% 55%),
+      hsl(37.7 90.2% 45%)
+    );
+    --gradient-hero: linear-gradient(
+      180deg,
+      hsl(222.2 47.4% 11.2%) 0%,
+      hsl(222.2 47.4% 15%) 100%
+    );
+    --gradient-dark: linear-gradient(
+      180deg,
+      hsl(222.2 47.4% 8%) 0%,
+      hsl(222.2 47.4% 4%) 100%
+    );
   }
 }
 
@@ -137,25 +172,21 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground font-inter antialiased;
+    @apply bg-background text-foreground font-inter antialiased transition-colors duration-300;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     @apply font-lora tracking-tight;
   }
 }
 
 /* 6. COMPONENT CLASS LOVABLE CLEANED UP */
 @layer components {
+  /* Menggunakan variabel warna agar beradaptasi otomatis di dark mode */
   .glass {
-    @apply bg-white/90 backdrop-blur-md border border-border;
+    @apply bg-background/80 backdrop-blur-md border border-border;
   }
   .glass-dark {
-    @apply bg-[#1E3A8A]/95 backdrop-blur-md border border-white/10;
+    @apply bg-dark-surface/90 backdrop-blur-md border border-white/10;
   }
   .neon-border {
     @apply border border-border;
@@ -167,7 +198,7 @@
     @apply text-primary font-semibold;
   }
   .bento-card {
-    @apply rounded-xl p-6 bg-card border border-border shadow-[0_4px_20px_rgba(30,58,138,0.04)] hover:shadow-[0_4px_20px_rgba(30,58,138,0.08)] transition-all duration-300;
+    @apply rounded-xl p-6 bg-card border border-border shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(255,255,255,0.02)] dark:hover:shadow-[0_4px_20px_rgba(255,255,255,0.05)] transition-all duration-300;
   }
   .section-padding {
     @apply py-14 sm:py-16 md:py-20 lg:py-24 xl:py-28;

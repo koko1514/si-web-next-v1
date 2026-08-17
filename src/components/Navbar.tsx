@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const navLinks = [
   { name: "Beranda", href: "/#hero" },
@@ -17,16 +18,24 @@ const navLinks = [
   { name: "Galeri", href: "/galeri" },
 ];
 
+const emptySubscribe = () => () => {};
+
 export function Navbar() {
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollYRef = useRef(0);
   const [isNavigating, setIsNavigating] = useState(false);
   const [activeLink, setActiveLink] = useState("/#hero");
 
-  const isDarkBg = !isScrolled && pathname === "/";
+  const isDarkBg = (!isScrolled && pathname === "/") || (mounted && theme === "dark");
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setIsMobileMenuOpen(false);
@@ -62,7 +71,7 @@ export function Navbar() {
       // Smart Hide/Show Logic
       if (isNavigating) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 400) {
+      } else if (currentScrollY > lastScrollYRef.current && currentScrollY > 400) {
         // Scrolling down & passed a certain point -> Hide
         setIsVisible(false);
       } else {
@@ -70,7 +79,7 @@ export function Navbar() {
         setIsVisible(true);
       }
       
-      setLastScrollY(currentScrollY);
+      lastScrollYRef.current = currentScrollY;
 
       // Active Section Detection (skip during programmatic smooth scroll clicks)
       if (pathname === "/") {
@@ -102,15 +111,14 @@ export function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Run initially
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY, isNavigating, pathname]);
+  }, [isNavigating, pathname]);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-white/90 backdrop-blur-md shadow-sm py-3"
+          ? "bg-background/90 backdrop-blur-md shadow-sm border-b border-border/40 py-3"
           : "bg-transparent py-5"
       } ${
         isVisible || isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
@@ -149,8 +157,8 @@ export function Navbar() {
                         ? "text-white font-bold"
                         : "text-primary font-bold"
                       : isDarkBg
-                        ? "text-white/70 hover:text-white"
-                        : "text-muted-foreground hover:text-primary"
+                        ? "text-white/80 hover:text-white"
+                        : "text-foreground/80 hover:text-primary"
                   }`}
                 >
                   {link.name}
@@ -159,7 +167,7 @@ export function Navbar() {
                       layoutId="activeNavbarUnderline"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       className={`absolute bottom-0 left-4 right-4 h-0.5 rounded-full ${
-                        isDarkBg ? "bg-white" : "bg-primary"
+                        isDarkBg ? "bg-accent" : "bg-primary"
                       }`}
                     />
                   )}
@@ -168,8 +176,26 @@ export function Navbar() {
             })}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* CTA Button & Theme Toggle */}
+          <div className="hidden lg:flex items-center gap-3">
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className={`p-2.5 rounded-full transition-all duration-300 border border-border/60 ${
+                  isDarkBg
+                    ? "bg-white/10 text-white hover:bg-white/20"
+                    : "bg-muted/80 text-foreground hover:bg-muted"
+                }`}
+                aria-label="Toggle Theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4 text-amber-400" />
+                ) : (
+                  <Moon className="w-4 h-4 text-slate-700" />
+                )}
+              </button>
+            )}
+
             <Button
               size="sm"
               className={`font-semibold shadow-sm transition-all duration-300 border border-transparent ${

@@ -9,12 +9,12 @@ export const metadata = {
 
 export default function MetaversePage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen border-none outline-none" style={{ background: "var(--gradient-dark)" }}>
       <Navbar />
       <main className="pt-20">
         <MetaverseSection />
       </main>
-      <Footer />
+      <Footer waveColor="hsl(221.2 83.2% 12%)" />
     </div>
   );
 }

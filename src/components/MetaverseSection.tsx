@@ -1,7 +1,97 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { 
+  Headphones, 
+  Maximize2, 
+  X, 
+  ChevronLeft, 
+  ChevronRight, 
+  Info, 
+  Sparkles, 
+  Eye, 
+  Layers, 
+  Box, 
+  Monitor 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Play, Maximize2, Compass, Headphones } from "lucide-react";
+
+const metaverseGallery = [
+  {
+    id: 1,
+    title: "Lobi Utama Virtual Campus SI ITHB",
+    category: "lobby",
+    categoryLabel: "Lobi & Ruang Utama",
+    image: "/metaverse/metaverse_lobby_1786901348285.jpg",
+    description: "Area lobi virtual 3D futuristik dengan hologram interaktif Sistem Informasi ITHB dan panel navigasi kampus.",
+    tags: ["Meta Quest VR", "Virtual Lobby", "3D Hologram"]
+  },
+  {
+    id: 2,
+    title: "Laboratorium Komputer & Data Stream VR",
+    category: "lab",
+    categoryLabel: "Laboratorium VR",
+    image: "/metaverse/metaverse_lab_1786901656113.jpg",
+    description: "Ruang simulasi lab komputasi dengan layar holografik transparan dan integrasi kontroler Oculus Meta Quest.",
+    tags: ["VR Lab", "Oculus Quest", "Interactive Data"]
+  },
+  {
+    id: 3,
+    title: "Auditorium Virtual & Stage Conference",
+    category: "auditorium",
+    categoryLabel: "Auditorium & Pameran",
+    image: "/metaverse/metaverse_auditorium_1786901890770.jpg",
+    description: "Auditorium virtual 3D berkapasitas besar untuk webinar, presentasi proyek, dan simposium teknologi.",
+    tags: ["3D Auditorium", "Holographic Stage", "Webinar VR"]
+  },
+  {
+    id: 4,
+    title: "Ruang Pameran Inovasi Proyek Mahasiswa",
+    category: "auditorium",
+    categoryLabel: "Auditorium & Pameran",
+    image: "/metaverse/metaverse_exhibition_1786901908423.jpg",
+    description: "Galeri pameran virtual untuk menampilkan karya inovasi, AI, dan sistem informasi buatan mahasiswa SI ITHB.",
+    tags: ["Exhibition Hall", "Student Showcase", "Interactive Booth"]
+  },
+  {
+    id: 5,
+    title: "Pengalaman VR Oculus Quest",
+    category: "experience",
+    categoryLabel: "Pengalaman Oculus VR",
+    image: "/event/VR.JPG",
+    description: "Dokumentasi mahasiswa Sistem Informasi ITHB saat melakukan uji coba pengalaman virtual tour menggunakan Meta Quest VR Headset.",
+    tags: ["Oculus Experience", "Hands-on VR", "SI ITHB Student"]
+  }
+];
+
+const filterCategories = [
+  { id: "all", label: "Semua Foto", icon: Layers },
+  { id: "lobby", label: "Lobi & Utama", icon: Box },
+  { id: "lab", label: "Laboratorium VR", icon: Monitor },
+  { id: "auditorium", label: "Auditorium & Pameran", icon: Sparkles },
+  { id: "experience", label: "Pengalaman VR", icon: Headphones },
+];
 
 export function MetaverseSection() {
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const filteredItems = selectedCategory === "all"
+    ? metaverseGallery
+    : metaverseGallery.filter(item => item.category === selectedCategory);
+
+  const activeItem = metaverseGallery[activeImageIndex] || metaverseGallery[0];
+
+  const handleNextImage = () => {
+    setActiveImageIndex((prev) => (prev + 1) % metaverseGallery.length);
+  };
+
+  const handlePrevImage = () => {
+    setActiveImageIndex((prev) => (prev - 1 + metaverseGallery.length) % metaverseGallery.length);
+  };
+
   return (
     <section
       id="metaverse"
@@ -11,7 +101,7 @@ export function MetaverseSection() {
       }}
     >
       {/* Animated Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         {/* Grid Pattern */}
         <div
           className="absolute inset-0 opacity-10"
@@ -41,129 +131,252 @@ export function MetaverseSection() {
       </div>
 
       {/* Glow Effects */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/20 text-accent text-sm font-medium mb-4 neon-border">
-            <Compass className="w-4 h-4" />
-            Virtual Experience
-          </span>
+        <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-dark-surface-foreground mb-4">
-            Jelajahi <span className="text-accent">Metaverse</span> Kampus
+            GALERI <span className="text-accent">METAVERSE</span> SI ITHB
           </h2>
-          <p className="text-dark-surface-foreground/70 text-base md:text-lg max-w-2xl mx-auto">
-            Rasakan pengalaman virtual tour 360° di kampus kami dengan teknologi
-            terkini
-          </p>
         </div>
 
-        {/* Metaverse Portal */}
-        <div className="max-w-5xl mx-auto">
-          <div className="relative rounded-3xl overflow-hidden neon-border animate-pulse-glow">
-            {/* Portal Frame */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-accent via-secondary to-accent rounded-3xl opacity-30 blur-sm animate-gradient" />
+        {/* Main Showcase Viewer */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <div className="relative rounded-3xl overflow-hidden neon-border bg-dark-surface shadow-2xl border border-white/10">
+            {/* Main Active Image Display */}
+            <div className="relative aspect-video w-full overflow-hidden group">
+              <Image
+                src={activeItem.image}
+                alt={activeItem.title}
+                fill
+                priority
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
 
-            <div className="relative aspect-auto min-h-[420px] py-12 md:py-0 md:aspect-video bg-dark-surface rounded-2xl overflow-hidden">
-              {/* Placeholder Content */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                {/* VR Headset Icon */}
-                <div className="w-16 h-16 md:w-24 md:h-24 rounded-full bg-accent/20 flex items-center justify-center mb-4 md:mb-6 animate-float">
-                  <Headphones className="w-8 h-8 md:w-12 md:h-12 text-accent" />
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-transparent to-black/30 opacity-90" />
+
+              {/* Top Tag Badges */}
+              <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+                <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-accent/50 text-accent text-xs font-semibold flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  {activeItem.categoryLabel}
+                </span>
+
+                <Button
+                  size="sm"
+                  variant="dark"
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-black/60 hover:bg-black/80 text-white border border-white/20 backdrop-blur-md text-xs gap-1.5"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  Perbesar Gambar
+                </Button>
+              </div>
+
+              {/* Navigation Controls */}
+              <button
+                onClick={handlePrevImage}
+                aria-label="Previous Image"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/60 hover:bg-accent text-white hover:text-black border border-white/20 flex items-center justify-center backdrop-blur-md transition-all duration-300 z-10"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={handleNextImage}
+                aria-label="Next Image"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/60 hover:bg-accent text-white hover:text-black border border-white/20 flex items-center justify-center backdrop-blur-md transition-all duration-300 z-10"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+
+              {/* Bottom Caption Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10">
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {activeItem.tags.map((tag, idx) => (
+                    <span key={idx} className="text-[11px] px-2.5 py-0.5 rounded-md bg-accent/20 border border-accent/40 text-accent font-medium">
+                      #{tag}
+                    </span>
+                  ))}
                 </div>
-
-                {/* Title */}
-                <h3 className="text-xl md:text-3xl font-bold text-dark-surface-foreground mb-2 md:mb-3 text-center px-4">
-                  SI ITHB Virtual Campus
+                <h3 className="text-xl md:text-3xl font-bold text-white mb-2">
+                  {activeItem.title}
                 </h3>
-                <p className="text-dark-surface-foreground/60 text-sm md:text-base text-center px-4 mb-6 md:mb-8 max-w-md">
-                  Jelajahi laboratorium, ruang kelas, dan fasilitas kampus
-                  secara virtual
+                <p className="text-white/80 text-sm md:text-base max-w-3xl leading-relaxed">
+                  {activeItem.description}
                 </p>
-
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 md:gap-4 px-4 w-full sm:w-auto">
-                  <Button variant="accent" size="lg" className="group text-sm md:text-base w-full sm:w-auto">
-                    <Play className="w-4 h-4 md:w-5 md:h-5" />
-                    Mulai Virtual Tour
-                  </Button>
-                  <Button variant="dark" size="lg" className="group text-sm md:text-base w-full sm:w-auto">
-                    <Maximize2 className="w-4 h-4 md:w-5 md:h-5" />
-                    Mode Fullscreen
-                  </Button>
-                </div>
               </div>
+            </div>
 
-              {/* Scanning Lines Effect */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div
-                  className="absolute inset-0 opacity-5"
-                  style={{
-                    backgroundImage: `repeating-linear-gradient(
-                      0deg,
-                      transparent,
-                      transparent 2px,
-                      hsl(var(--accent)) 2px,
-                      hsl(var(--accent)) 4px
-                    )`,
-                    animation: "scan 8s linear infinite",
-                  }}
-                />
-              </div>
-
-              {/* Corner Decorations */}
-              <div className="absolute top-4 left-4 w-10 h-10 md:w-16 md:h-16 border-l-2 border-t-2 border-accent/50 rounded-tl-xl" />
-              <div className="absolute top-4 right-4 w-10 h-10 md:w-16 md:h-16 border-r-2 border-t-2 border-accent/50 rounded-tr-xl" />
-              <div className="absolute bottom-4 left-4 w-10 h-10 md:w-16 md:h-16 border-l-2 border-b-2 border-accent/50 rounded-bl-xl" />
-              <div className="absolute bottom-4 right-4 w-10 h-10 md:w-16 md:h-16 border-r-2 border-b-2 border-accent/50 rounded-br-xl" />
+            {/* Thumbnail Selector Strip */}
+            <div className="p-4 bg-black/40 border-t border-white/10 flex gap-3 overflow-x-auto custom-scrollbar">
+              {metaverseGallery.map((item, index) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveImageIndex(index)}
+                  className={`relative w-28 h-18 md:w-36 md:h-20 shrink-0 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                    activeImageIndex === index
+                      ? "border-accent ring-2 ring-accent/50 scale-105"
+                      : "border-white/10 opacity-60 hover:opacity-100 hover:border-white/40"
+                  }`}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/20" />
+                  <span className="absolute bottom-1 left-1.5 text-[10px] text-white font-mono bg-black/70 px-1.5 py-0.5 rounded">
+                    0{index + 1}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Features */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {[
-            {
-              icon: "🎮",
-              title: "Interactive 3D",
-              desc: "Navigasi bebas di dunia virtual",
-            },
-            {
-              icon: "🔊",
-              title: "Audio Guide",
-              desc: "Narasi penjelasan di setiap lokasi",
-            },
-            {
-              icon: "🌐",
-              title: "Multi-Platform",
-              desc: "Akses dari browser atau VR headset",
-            },
-          ].map((feature, index) => (
-            <div
-              key={index}
-              className="text-center p-6 rounded-xl bg-white/5 border border-white/10 hover:border-accent/30 transition-colors"
-            >
-              <span className="text-3xl sm:text-4xl mb-2 sm:mb-3 block">{feature.icon}</span>
-              <h4 className="text-base sm:text-lg font-semibold text-dark-surface-foreground mb-1">
-                {feature.title}
-              </h4>
-              <p className="text-dark-surface-foreground/60 text-xs sm:text-sm">
-                {feature.desc}
-              </p>
-            </div>
-          ))}
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10">
+          {filterCategories.map((cat) => {
+            const Icon = cat.icon;
+            const isActive = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-4 py-2.5 rounded-xl text-xs md:text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                  isActive
+                    ? "bg-accent text-black font-semibold shadow-lg shadow-accent/20"
+                    : "bg-white/5 hover:bg-white/10 text-dark-surface-foreground/80 border border-white/10"
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {cat.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Filtered Grid Gallery */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {filteredItems.map((item) => {
+            const originalIndex = metaverseGallery.findIndex((g) => g.id === item.id);
+            return (
+              <div
+                key={item.id}
+                onClick={() => {
+                  setActiveImageIndex(originalIndex);
+                  setIsModalOpen(true);
+                }}
+                className="group relative rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-accent/50 transition-all duration-300 cursor-pointer shadow-lg hover:-translate-y-1"
+              >
+                <div className="relative aspect-video w-full overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                  
+                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur-md text-accent text-[11px] font-semibold border border-accent/30">
+                    {item.categoryLabel}
+                  </span>
+
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40">
+                    <span className="p-3 rounded-full bg-accent text-black font-bold flex items-center gap-2 text-xs shadow-xl">
+                      <Eye className="w-4 h-4" />
+                      Lihat Foto
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-5">
+                  <h4 className="text-base font-bold text-dark-surface-foreground group-hover:text-accent transition-colors mb-2 line-clamp-1">
+                    {item.title}
+                  </h4>
+                  <p className="text-dark-surface-foreground/70 text-xs line-clamp-2 leading-relaxed mb-4">
+                    {item.description}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {item.tags.map((tag, idx) => (
+                      <span key={idx} className="text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-dark-surface-foreground/60">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Scan Animation Keyframes */}
-      <style>{`
-        @keyframes scan {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100%); }
-        }
-      `}</style>
+      {/* Lightbox Zoom Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 md:p-8 animate-fade-in">
+          {/* Modal Header */}
+          <div className="flex justify-between items-center text-white z-20">
+            <div>
+              <span className="text-xs text-accent font-mono uppercase tracking-wider">
+                Metaverse 3D Photo Lightbox ({activeImageIndex + 1} / {metaverseGallery.length})
+              </span>
+              <h3 className="text-lg md:text-2xl font-bold">{activeItem.title}</h3>
+            </div>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="p-2.5 rounded-full bg-white/10 hover:bg-accent hover:text-black transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Modal Main Image */}
+          <div className="relative flex-1 my-4 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-full max-w-6xl max-h-[75vh]">
+              <Image
+                src={activeItem.image}
+                alt={activeItem.title}
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            {/* Modal Controls */}
+            <button
+              onClick={handlePrevImage}
+              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-accent hover:text-black text-white flex items-center justify-center backdrop-blur-md transition-all z-20"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+            <button
+              onClick={handleNextImage}
+              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-accent hover:text-black text-white flex items-center justify-center backdrop-blur-md transition-all z-20"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+          </div>
+
+          {/* Modal Footer Description */}
+          <div className="max-w-4xl mx-auto text-center z-20">
+            <p className="text-white/80 text-sm md:text-base mb-3">
+              {activeItem.description}
+            </p>
+            <div className="flex justify-center gap-2">
+              {activeItem.tags.map((tag, idx) => (
+                <span key={idx} className="text-xs px-3 py-1 rounded-full bg-accent/20 border border-accent/40 text-accent">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

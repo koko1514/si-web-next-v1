@@ -27,15 +27,7 @@ export function AboutSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            <span className="text-primary">Visi</span>{" "}
-            <span
-              className="inline-block bg-clip-text text-transparent px-0.5"
-              style={{
-                backgroundImage: `linear-gradient(90deg, hsl(var(--primary)) 50%, hsl(var(--accent)) 50%)`,
-              }}
-            >
-              &
-            </span>{" "}
+            <span className="text-primary">Visi</span> &{" "}
             <span className="text-accent">Misi</span>
           </h2>
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">

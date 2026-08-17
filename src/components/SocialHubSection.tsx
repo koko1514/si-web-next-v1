@@ -162,7 +162,7 @@ export function SocialHubSection() {
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Life at <span className="gradient-text">SI ITHB</span>
+            LIFE AT <span className="gradient-text">SI ITHB</span>
           </h2>
           <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
             Ikuti perjalanan mahasiswa kami melalui momen-momen berharga di kampus
@@ -188,12 +188,12 @@ export function SocialHubSection() {
               <Button
                 variant="outline"
                 size="lg"
-                className="group border-2 border-foreground/20 rounded-full px-8 py-6 font-semibold inline-flex items-center gap-2 hover:bg-pink-500 hover:text-white hover:border-pink-500 transition-all duration-300 w-full sm:w-auto text-muted-foreground"
+                className="group border-2 border-foreground/30 rounded-full px-8 py-6 font-semibold inline-flex items-center gap-2 hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 w-full sm:w-auto"
                 onClick={() => window.open("https://www.instagram.com/sistem.informasi.ithb/", "_blank")}
               >
-                <Instagram className="w-5 h-5 text-muted-foreground group-hover:text-white" />
+                <Instagram className="w-5 h-5 text-foreground group-hover:text-secondary-foreground" />
                 Follow juga @sistem.informasi.ithb
-                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-white" />
+                <ExternalLink className="w-4 h-4 text-foreground group-hover:text-secondary-foreground" />
               </Button>
             )}
           </div>
