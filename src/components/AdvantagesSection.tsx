@@ -72,7 +72,7 @@ export function AdvantagesSection() {
         </motion.div>
 
         {/* Advantage Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
           {advantages.map((advantage, index) => (
             <motion.div
               key={index}
@@ -81,7 +81,7 @@ export function AdvantagesSection() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="group relative p-8 rounded-2xl bg-dark-surface/50 border border-white/10 backdrop-blur-sm hover:border-accent/50 transition-colors duration-300 cursor-default"
+              className="group relative p-4 sm:p-6 md:p-8 rounded-2xl bg-dark-surface/50 border border-white/10 backdrop-blur-sm hover:border-accent/50 transition-colors duration-300 cursor-default"
             >
               {/* Glow Effect on Hover */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
@@ -91,29 +91,29 @@ export function AdvantagesSection() {
 
               <div className="relative z-10">
                 {/* Icon */}
-                <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 group-hover:shadow-[0_0_30px_hsl(177_85%_50%_/_0.3)] transition-all duration-300">
-                  <advantage.icon className="w-7 h-7 text-accent" />
+                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-accent/20 group-hover:shadow-[0_0_30px_hsl(177_85%_50%_/_0.3)] transition-all duration-300">
+                  <advantage.icon className="w-5 h-5 sm:w-7 sm:h-7 text-accent" />
                 </div>
 
                 {/* Highlight Badge */}
-                <span className="inline-block px-3.5 py-1 rounded-full bg-accent/15 text-amber-300 border border-accent/30 text-xs font-semibold mb-4 backdrop-blur-sm shadow-sm">
+                <span className="inline-block px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-accent/15 text-amber-300 border border-accent/30 text-[10px] sm:text-xs font-semibold mb-3 sm:mb-4 backdrop-blur-sm shadow-sm">
                   {advantage.highlight}
                 </span>
 
                 {/* Title */}
-                <h3 className="text-lg sm:text-xl font-bold text-dark-surface-foreground mb-3">
+                <h3 className="text-sm sm:text-lg lg:text-xl font-bold text-dark-surface-foreground mb-2 sm:mb-3">
                   {advantage.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-dark-surface-foreground/70 text-sm sm:text-base leading-relaxed">
+                <p className="text-dark-surface-foreground/70 text-xs sm:text-sm lg:text-base leading-relaxed">
                   {advantage.description}
                 </p>
               </div>
 
               {/* Corner Decoration */}
-              <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/10 rounded-tr-xl group-hover:border-accent/40 transition-colors" />
-              <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-white/10 rounded-bl-xl group-hover:border-accent/40 transition-colors" />
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 border-white/10 rounded-tr-xl group-hover:border-accent/40 transition-colors" />
+              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 border-white/10 rounded-bl-xl group-hover:border-accent/40 transition-colors" />
             </motion.div>
           ))}
         </div>

@@ -118,7 +118,7 @@ export function LecturersSection() {
         </motion.div>
 
         {/* Lecturers Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-6">
           {lecturers.map((lecturer, index) => (
             <motion.div
               key={index}
@@ -133,16 +133,16 @@ export function LecturersSection() {
               <div className="aspect-[4/5] relative overflow-hidden bg-muted">
                 <LecturerImage src={lecturer.image} alt={lecturer.name} />
                 {(lecturer.email || lecturer.linkedin) && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark-surface/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                    {/* Social Icons inside photo on hover */}
-                    <div className="flex gap-3">
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-surface/80 via-transparent to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-3 sm:pb-4">
+                    {/* Social Icons inside photo */}
+                    <div className="flex gap-2 sm:gap-3">
                       {lecturer.email && (
                         <a
                           href={`mailto:${lecturer.email}`}
-                          className="w-8 h-8 rounded-lg bg-background/95 backdrop-blur flex items-center justify-center shadow hover:bg-secondary hover:text-secondary-foreground transition-colors"
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-background/95 backdrop-blur flex items-center justify-center shadow hover:bg-secondary hover:text-secondary-foreground transition-colors"
                           aria-label="Email"
                         >
-                          <Mail className="w-4 h-4" />
+                          <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         </a>
                       )}
                       {lecturer.linkedin && (
@@ -150,10 +150,10 @@ export function LecturersSection() {
                           href={lecturer.linkedin}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-8 h-8 rounded-lg bg-background/95 backdrop-blur flex items-center justify-center shadow hover:bg-secondary hover:text-secondary-foreground transition-colors"
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-background/95 backdrop-blur flex items-center justify-center shadow hover:bg-secondary hover:text-secondary-foreground transition-colors"
                           aria-label="LinkedIn"
                         >
-                          <Linkedin className="w-4 h-4" />
+                          <Linkedin className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         </a>
                       )}
                     </div>
@@ -162,30 +162,30 @@ export function LecturersSection() {
               </div>
 
               {/* Text Info */}
-              <div className="p-5 flex-grow flex flex-col justify-between">
+              <div className="p-3 sm:p-5 flex-grow flex flex-col justify-between">
                 <div>
                   {/* Position/Role */}
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-secondary block mb-1">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold text-secondary block mb-1">
                     {lecturer.role}
                   </span>
                   
                   {/* Name */}
-                  <h3 className="font-bold text-foreground text-sm sm:text-base mb-3 leading-snug font-space group-hover:text-secondary transition-colors">
+                  <h3 className="font-bold text-foreground text-xs sm:text-base mb-2 sm:mb-3 leading-snug font-space group-hover:text-secondary transition-colors">
                     {lecturer.name}
                   </h3>
                 </div>
 
                 {/* Expertise Badges */}
-                <div className="space-y-1.5 pt-2 border-t border-border/50">
-                  <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-semibold">
-                    <GraduationCap className="w-3.5 h-3.5 text-secondary" />
+                <div className="space-y-1 sm:space-y-1.5 pt-2 border-t border-border/50">
+                  <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] text-muted-foreground font-semibold">
+                    <GraduationCap className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-secondary" />
                     <span>Bidang Keahlian:</span>
                   </div>
                   <div className="flex flex-wrap gap-1">
                     {lecturer.expertise.map((exp, expIdx) => (
                       <span
                         key={expIdx}
-                        className="px-2 py-0.5 rounded bg-muted text-muted-foreground text-[9px] font-medium"
+                        className="px-1.5 sm:px-2 py-0.5 rounded bg-muted text-muted-foreground text-[8px] sm:text-[9px] font-medium"
                       >
                         {exp}
                       </span>

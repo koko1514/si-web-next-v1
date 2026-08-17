@@ -52,10 +52,10 @@ export function AccreditationSection() {
               className="w-full h-auto object-cover group-hover:scale-[1.01] transition-transform duration-500"
             />
 
-            {/* Zoom Overlay on Hover */}
-            <div className="absolute inset-0 bg-dark-surface/20 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-background/90 backdrop-blur flex items-center justify-center shadow-lg">
-                <ZoomIn className="w-6 h-6 text-foreground" />
+            {/* Zoom Overlay (Visible on mobile, hover on desktop) */}
+            <div className="absolute inset-0 bg-dark-surface/20 opacity-100 sm:opacity-0 sm:group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-background/90 backdrop-blur flex items-center justify-center shadow-lg">
+                <ZoomIn className="w-5 h-5 sm:w-6 sm:h-6 text-foreground" />
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@ export function AccreditationSection() {
         <div className="max-w-5xl mx-auto border-t border-border/50 my-12" />
 
         {/* Certification Badges Row (Below the main BAN-PT) */}
-        <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="max-w-2xl mx-auto grid grid-cols-2 gap-3 sm:gap-6">
           {(
             [
               {
@@ -110,33 +110,35 @@ export function AccreditationSection() {
           ).map((accred, index) => (
             <div
               key={index}
-              className="group relative p-6 rounded-2xl bg-card border border-border/50 hover:border-secondary/30 hover:shadow-lg transition-all duration-300 text-center"
+              className="group relative p-4 sm:p-6 rounded-2xl bg-card border border-border/50 hover:border-secondary/30 shadow-sm sm:shadow-none hover:shadow-lg transition-all duration-300 text-center flex flex-col justify-between"
             >
               {/* Icon / Logo */}
-              <div className="w-24 h-16 mx-auto flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300 p-2">
+              <div className="w-20 sm:w-24 h-14 sm:h-16 mx-auto flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-105 transition-transform duration-300 p-1 sm:p-2">
                 <Image
                   src={accred.logo}
                   alt={accred.name}
                   width={120}
                   height={60}
-                  className={`w-auto h-10 object-contain ${accred.logoClassName || ""}`}
+                  className={`w-auto h-8 sm:h-10 object-contain ${accred.logoClassName || ""}`}
                 />
               </div>
 
-              {/* Name */}
-              <h4 className="text-base font-bold text-foreground font-space mb-1">
-                {accred.name}
-              </h4>
+              <div>
+                {/* Name */}
+                <h4 className="text-xs sm:text-base font-bold text-foreground font-space mb-1">
+                  {accred.name}
+                </h4>
 
-              {/* Grade Badge */}
-              <span className="inline-block px-2.5 py-0.5 rounded-full bg-accent/10 text-accent text-[10px] sm:text-xs font-semibold mb-2">
-                {accred.grade}
-              </span>
+                {/* Grade Badge */}
+                <span className="inline-block px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-accent/10 text-accent text-[9px] sm:text-xs font-semibold mb-1.5 sm:mb-2">
+                  {accred.grade}
+                </span>
 
-              {/* Details */}
-              <p className="text-[10px] text-muted-foreground/80 leading-relaxed">
-                {accred.description}
-              </p>
+                {/* Details */}
+                <p className="text-[9px] sm:text-[10px] text-muted-foreground/80 leading-relaxed">
+                  {accred.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -146,7 +148,9 @@ export function AccreditationSection() {
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in cursor-zoom-out"
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in cursor-pointer select-none"
         >
           <button
             onClick={() => setIsOpen(false)}

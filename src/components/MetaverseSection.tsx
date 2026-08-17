@@ -178,7 +178,10 @@ export function MetaverseSection() {
         >
           <div className="relative rounded-3xl overflow-hidden neon-border bg-dark-surface shadow-2xl border border-white/10">
             {/* Main Active Image Display with AnimatePresence */}
-            <div className="relative aspect-video w-full overflow-hidden group">
+            <div
+              className="relative aspect-video w-full overflow-hidden group cursor-pointer"
+              onClick={() => setIsModalOpen(true)}
+            >
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeItem.id}
@@ -199,23 +202,26 @@ export function MetaverseSection() {
               </AnimatePresence>
 
               {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-transparent to-black/30 opacity-90 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-transparent to-black/40 opacity-80 md:opacity-90 pointer-events-none" />
 
-              {/* Top Tag Badges */}
-              <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
-                <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-accent/50 text-accent text-xs font-semibold flex items-center gap-1.5 shadow-lg">
-                  <Sparkles className="w-3.5 h-3.5" />
+              {/* Top Tag Badges & Zoom Control */}
+              <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex justify-between items-center z-10">
+                <span className="px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-accent/50 text-accent text-[10px] sm:text-xs font-semibold flex items-center gap-1 sm:gap-1.5 shadow-lg">
+                  <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                   {activeItem.categoryLabel}
                 </span>
 
                 <Button
                   size="sm"
                   variant="dark"
-                  onClick={() => setIsModalOpen(true)}
-                  className="bg-black/60 hover:bg-black/80 text-white border border-white/20 backdrop-blur-md text-xs gap-1.5 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsModalOpen(true);
+                  }}
+                  className="bg-black/60 hover:bg-black/80 text-white border border-white/20 backdrop-blur-md text-[10px] sm:text-xs px-2.5 sm:px-3 py-1 sm:py-1.5 h-auto gap-1.5 cursor-pointer shadow-lg"
                 >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                  Perbesar Gambar
+                  <Maximize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <span className="hidden sm:inline">Perbesar Gambar</span>
                 </Button>
               </div>
 
@@ -223,24 +229,30 @@ export function MetaverseSection() {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={handlePrevImage}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrevImage();
+                }}
                 aria-label="Previous Image"
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/60 hover:bg-accent text-white hover:text-black border border-white/20 flex items-center justify-center backdrop-blur-md transition-colors duration-300 z-10 cursor-pointer"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-accent text-white hover:text-black border border-white/20 flex items-center justify-center backdrop-blur-md transition-colors duration-300 z-10 cursor-pointer shadow-lg"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={handleNextImage}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNextImage();
+                }}
                 aria-label="Next Image"
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/60 hover:bg-accent text-white hover:text-black border border-white/20 flex items-center justify-center backdrop-blur-md transition-colors duration-300 z-10 cursor-pointer"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-accent text-white hover:text-black border border-white/20 flex items-center justify-center backdrop-blur-md transition-colors duration-300 z-10 cursor-pointer shadow-lg"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
               </motion.button>
 
-              {/* Bottom Caption Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10 pointer-events-none">
+              {/* Bottom Caption Overlay for Desktop */}
+              <div className="hidden md:block absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10 pointer-events-none">
                 <div className="flex flex-wrap gap-2 mb-3">
                   {activeItem.tags.map((tag, idx) => (
                     <span key={idx} className="text-[11px] px-2.5 py-0.5 rounded-md bg-accent/20 border border-accent/40 text-accent font-medium backdrop-blur-sm">
@@ -255,6 +267,23 @@ export function MetaverseSection() {
                   {activeItem.description}
                 </p>
               </div>
+            </div>
+
+            {/* Mobile Caption Area (Placed cleanly below photo on mobile) */}
+            <div className="block md:hidden p-4 bg-black/40 border-t border-white/10">
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {activeItem.tags.map((tag, idx) => (
+                  <span key={idx} className="text-[10px] px-2 py-0.5 rounded bg-accent/15 border border-accent/30 text-accent font-medium">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+              <h3 className="text-base font-bold text-white mb-1 leading-snug">
+                {activeItem.title}
+              </h3>
+              <p className="text-white/70 text-xs leading-relaxed">
+                {activeItem.description}
+              </p>
             </div>
 
             {/* Thumbnail Selector Strip */}
@@ -390,7 +419,9 @@ export function MetaverseSection() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={() => setIsModalOpen(false)}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 md:p-8 cursor-zoom-out"
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col justify-between p-4 md:p-8 cursor-pointer select-none"
           >
             {/* Modal Header */}
             <div className="flex justify-between items-center text-white z-20">
