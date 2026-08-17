@@ -15,7 +15,6 @@ const navLinks = [
   { name: "Karier", href: "/#career" },
   { name: "Keunggulan", href: "/#advantages" },
   { name: "Dosen", href: "/#lecturers" },
-  { name: "Galeri", href: "/galeri" },
 ];
 
 const emptySubscribe = () => () => {};
