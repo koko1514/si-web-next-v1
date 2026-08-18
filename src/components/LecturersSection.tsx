@@ -48,19 +48,6 @@ const lecturers = [
     email: "herastia@ithb.ac.id",
   },
   {
-    name: "Cut Fiarni, S.Si., M.T.",
-    role: "Dosen Bidang Proses Bisnis & Analisis Data",
-    expertise: [
-      "Analisis & Manajemen Proses Bisnis",
-      "Analisis Data & Kinerja Sistem",
-      "Sistem Pendukung Keputusan",
-      "E-Business & IT Governance",
-    ],
-    image: "/rani.jpg",
-    linkedin: "https://www.linkedin.com/in/cut-fiarni/",
-    email: "cutfiarni@ithb.ac.id",
-  },
-  {
     name: "Ivan Michael Siregar, S.T., M.T.",
     role: "Dosen Bidang Algoritma & Pemrograman",
     expertise: [
